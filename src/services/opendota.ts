@@ -188,14 +188,27 @@ export function calculateRecentStats(matches: PlayerRecentMatch[] | null) {
   if (!matches || matches.length === 0) return null;
   
   const recent = matches.slice(0, 20);
-  const wins = recent.filter(m => m.win === 1).length;
+  
+  // 判断胜利：win 可能是 1 或 0，或者通过 player_slot 和 radiant_win 判断
+  const isWin = (match: PlayerRecentMatch) => {
+    // 优先使用 win 字段（1 表示胜利）
+    if (match.win === 1) return true;
+    // 如果 win 字段是 0，明确失败
+    if (match.win === 0) return false;
+    // 备用方案：通过 player_slot 和 radiant_win 判断
+    // player_slot 0-4 是天辉，128-132 是夜魇
+    const isRadiant = match.player_slot < 128;
+    return isRadiant === match.radiant_win;
+  };
+  
+  const wins = recent.filter(isWin).length;
   
   // 统计英雄使用
   const heroMap = new Map<number, { games: number; wins: number }>();
   recent.forEach(match => {
     const current = heroMap.get(match.hero_id) || { games: 0, wins: 0 };
     current.games++;
-    if (match.win === 1) current.wins++;
+    if (isWin(match)) current.wins++;
     heroMap.set(match.hero_id, current);
   });
   
