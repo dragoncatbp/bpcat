@@ -138,7 +138,7 @@ export const heroAliases: HeroAlias[] = [
   { heroId: 119, aliases: ['willow', '花仙子', 'hxz', '邪影芳灵', '米波', '荆棘迷宫', '暗影之境', '诅咒王冠', '作祟'] },
   { heroId: 121, aliases: ['grim', '墨客', 'mk2', '天涯墨客', '岩珠', '幻影之拥', '命运之笔', '墨涌', '缚魂'] },
   { heroId: 128, aliases: ['snapfire', '老奶奶', 'lnn', '电炎绝手', '碧翠丝', '散射弹幕', '龙炎饼干', '电光石火', '蜥蜴绝吻'] },
-  { heroId: 135, aliases: ['ringmaster', '百戏大王', 'bxdw', ' tricks of the trade', '戏法', 'mc', 'lion dance'] },
+  { heroId: 131, aliases: ['ringmaster', '百戏大王', 'bxdw', '朗戈', '戏法', 'mc', '百戏'] },
   { heroId: 141, aliases: ['muerta', '琼英碧灵', 'qybl', 'muerta', '亡魂', '散弹', '双枪', '枪'] },
   { heroId: 147, aliases: ['largo', '劳戈', 'lg', 'bard', '青蛙', '吟游诗人'] },
 ];

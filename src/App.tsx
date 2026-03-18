@@ -5,7 +5,9 @@ import { TeamAnalysis } from '@/components/TeamAnalysis';
 import { CounterTips } from '@/components/CounterTips';
 import { MemberSignatures } from '@/components/MemberSignatures';
 import { TeamManager } from '@/components/TeamManager';
+import { BPHistory } from '@/components/BPHistory';
 import type { Team } from '@/types/team';
+import type { BPDraft } from '@/types';
 import { 
   createDraft, 
   makeSelection, 
@@ -16,11 +18,11 @@ import {
   getCurrentTeamName,
   undoLastStep,
 } from '@/utils/bpEngine';
-import type { BPDraft } from '@/types';
+import { evaluateDraft, getScoreColor, getScoreLevel } from '@/utils/bpEvaluation';
 import heroesData from '@/data/heroes.json';
 import './App.css';
 
-type AppView = 'bp' | 'teams';
+type AppView = 'bp' | 'teams' | 'history';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>('bp');
@@ -87,6 +89,12 @@ function App() {
             🎮 BP模拟器
           </button>
           <button 
+            className={currentView === 'history' ? 'active' : ''}
+            onClick={() => setCurrentView('history')}
+          >
+            📚 BP记录
+          </button>
+          <button 
             className={currentView === 'teams' ? 'active' : ''}
             onClick={() => setCurrentView('teams')}
           >
@@ -119,6 +127,17 @@ function App() {
                 </button>
               </div>
             )}
+          </div>
+        ) : currentView === 'history' ? (
+          /* BP历史记录界面 */
+          <div className="history-view">
+            <BPHistory 
+              currentDraft={isComplete ? draft : null}
+              onLoadDraft={(loadedDraft) => {
+                setDraft(loadedDraft);
+                setCurrentView('bp');
+              }}
+            />
           </div>
         ) : (
           /* BP界面 */
@@ -192,16 +211,17 @@ function App() {
                 </div>
 
                 <div className="rules-card">
-                  <h3>📋 BP规则 (7.40c)</h3>
+                  <h3>📋 BP规则 (7.40)</h3>
                   <ul>
-                    <li>第一轮禁用: 先3后4</li>
-                    <li>第一轮选择: 各1个</li>
-                    <li>第二轮禁用: 先2后1</li>
-                    <li>第二轮选择: 各3个</li>
-                    <li>第三轮禁用: 各2个</li>
-                    <li>第三轮选择: 各1个</li>
+                    <li>第一轮禁用: 先2后2先1后2 (7个)</li>
+                    <li>第一轮选择: 先1后1 (2个)</li>
+                    <li>第二轮禁用: 先2后1 (3个)</li>
+                    <li>第二轮选择: 后1先2后2先1 (6个)</li>
+                    <li>第三轮禁用: 先1后1先1后1 (4个)</li>
+                    <li>第三轮选择: 先1后1 (2个)</li>
                   </ul>
-                  <p className="rules-note">每方共禁用7个，选择5个英雄</p>
+                  <p className="rules-note">每方共禁用7个，选择5个英雄 (24步)</p>
+                  <p className="rules-note" style={{color: '#60a5fa'}}>7.40更新: 第一/三轮ban阶段顺序改变</p>
                 </div>
 
                 <div className="features-card">
@@ -303,6 +323,47 @@ function App() {
                           </div>
                         </div>
                       </div>
+                      
+                      {/* 阵容评价 */}
+                      <div className="draft-evaluation">
+                        <h4>📊 阵容评价</h4>
+                        {(() => {
+                          const eval1 = evaluateDraft(draft, 'radiant');
+                          const eval2 = evaluateDraft(draft, 'dire');
+                          return (
+                            <div className="evaluation-comparison">
+                              <div className="eval-team radiant">
+                                <span className="eval-team-name">天辉</span>
+                                <span 
+                                  className="eval-score"
+                                  style={{ color: getScoreColor(eval1.overallScore) }}
+                                >
+                                  {eval1.overallScore}
+                                </span>
+                                <span className="eval-level">{getScoreLevel(eval1.overallScore)}</span>
+                              </div>
+                              <div className="eval-vs">VS</div>
+                              <div className="eval-team dire">
+                                <span className="eval-team-name">夜魇</span>
+                                <span 
+                                  className="eval-score"
+                                  style={{ color: getScoreColor(eval2.overallScore) }}
+                                >
+                                  {eval2.overallScore}
+                                </span>
+                                <span className="eval-level">{getScoreLevel(eval2.overallScore)}</span>
+                              </div>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                      
+                      <button 
+                        className="btn-primary save-bp-btn"
+                        onClick={() => setCurrentView('history')}
+                      >
+                        💾 保存此BP到记录
+                      </button>
                     </div>
                   )}
 

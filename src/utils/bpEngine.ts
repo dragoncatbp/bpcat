@@ -1,53 +1,54 @@
 /**
  * BP引擎 - 处理Dota2 Captain's Mode的BP逻辑
- * 基于7.34+版本的BP规则
+ * 基于7.40版本的BP规则 (2025年12月更新)
  */
 
 import type { Team, PhaseType, BPStep, BPDraft } from '@/types';
 
-// CM模式BP顺序（先选方视角）
-// 格式: [team, type]
+// CM模式BP顺序（先选方视角）- Dota 2 7.40版本
+// 7.40更新：第一轮和第三轮ban阶段顺序改变
 // 先选方: 'radiant', 后选方: 'dire'
+// 总计：每方5个pick，7个ban
 export const CM_SEQUENCE: { team: Team; type: PhaseType }[] = [
-  // Ban Phase 1: 先3后4
-  { team: 'radiant', type: 'ban' },   // 1
-  { team: 'dire', type: 'ban' },      // 2
-  { team: 'dire', type: 'ban' },      // 3
-  { team: 'radiant', type: 'ban' },   // 4
-  { team: 'dire', type: 'ban' },      // 5
-  { team: 'dire', type: 'ban' },      // 6
-  { team: 'radiant', type: 'ban' },   // 7
+  // Ban Phase 1: 先2后2先1后2 (7.40新顺序)
+  // 旧: 先-后-后-先-后-后-先
+  // 新: 先-先-后-后-先-后-后
+  { team: 'radiant', type: 'ban' },   // 1 - 先选方ban #1
+  { team: 'radiant', type: 'ban' },   // 2 - 先选方ban #2
+  { team: 'dire', type: 'ban' },      // 3 - 后选方ban #1
+  { team: 'dire', type: 'ban' },      // 4 - 后选方ban #2
+  { team: 'radiant', type: 'ban' },   // 5 - 先选方ban #3
+  { team: 'dire', type: 'ban' },      // 6 - 后选方ban #3
+  { team: 'dire', type: 'ban' },      // 7 - 后选方ban #4
   
-  // Pick Phase 1: 各1个
-  { team: 'radiant', type: 'pick' },  // 8
-  { team: 'dire', type: 'pick' },     // 9
-  { team: 'dire', type: 'pick' },     // 10
-  { team: 'radiant', type: 'pick' },  // 11
+  // Pick Phase 1: 先1后1 (2个)
+  { team: 'radiant', type: 'pick' },  // 8 - 先选方pick #1
+  { team: 'dire', type: 'pick' },     // 9 - 后选方pick #1
   
-  // Ban Phase 2: 先2后1
-  { team: 'radiant', type: 'ban' },   // 12
-  { team: 'radiant', type: 'ban' },   // 13
-  { team: 'dire', type: 'ban' },      // 14
+  // Ban Phase 2: 先2后1 (3个)
+  { team: 'radiant', type: 'ban' },   // 10 - 先选方ban #4
+  { team: 'radiant', type: 'ban' },   // 11 - 先选方ban #5
+  { team: 'dire', type: 'ban' },      // 12 - 后选方ban #5
   
-  // Pick Phase 2: 各3个
-  { team: 'dire', type: 'pick' },     // 15
-  { team: 'radiant', type: 'pick' },  // 16
-  { team: 'radiant', type: 'pick' },  // 17
-  { team: 'dire', type: 'pick' },     // 18
-  { team: 'dire', type: 'pick' },     // 19
-  { team: 'radiant', type: 'pick' },  // 20
-  { team: 'dire', type: 'pick' },     // 21
-  { team: 'radiant', type: 'pick' },  // 22
+  // Pick Phase 2: 后1先2后2先1 (6个)
+  { team: 'dire', type: 'pick' },     // 13 - 后选方pick #2
+  { team: 'radiant', type: 'pick' },  // 14 - 先选方pick #2
+  { team: 'radiant', type: 'pick' },  // 15 - 先选方pick #3
+  { team: 'dire', type: 'pick' },     // 16 - 后选方pick #3
+  { team: 'dire', type: 'pick' },     // 17 - 后选方pick #4
+  { team: 'radiant', type: 'pick' },  // 18 - 先选方pick #4
   
-  // Ban Phase 3: 各2个
-  { team: 'radiant', type: 'ban' },   // 23
-  { team: 'dire', type: 'ban' },      // 24
-  { team: 'dire', type: 'ban' },      // 25
-  { team: 'radiant', type: 'ban' },   // 26
+  // Ban Phase 3: 先1后1先1后1 (7.40新顺序，4个)
+  // 旧: 先-后-后-先
+  // 新: 先-后-先-后
+  { team: 'radiant', type: 'ban' },   // 19 - 先选方ban #6
+  { team: 'dire', type: 'ban' },      // 20 - 后选方ban #6
+  { team: 'radiant', type: 'ban' },   // 21 - 先选方ban #7
+  { team: 'dire', type: 'ban' },      // 22 - 后选方ban #7
   
-  // Pick Phase 3: 各1个
-  { team: 'radiant', type: 'pick' },  // 27
-  { team: 'dire', type: 'pick' },     // 28
+  // Pick Phase 3: 先1后1 (2个)
+  { team: 'radiant', type: 'pick' },  // 23 - 先选方pick #5
+  { team: 'dire', type: 'pick' },     // 24 - 后选方pick #5
 ];
 
 // 如果夜魇先选，交换队伍
@@ -191,10 +192,10 @@ export function getUnavailableHeroes(draft: BPDraft): number[] {
 // 获取BP阶段名称
 export function getPhaseName(stepIndex: number): string {
   if (stepIndex < 7) return '第一轮禁用';
-  if (stepIndex < 11) return '第一轮选择';
-  if (stepIndex < 14) return '第二轮禁用';
-  if (stepIndex < 22) return '第二轮选择';
-  if (stepIndex < 26) return '第三轮禁用';
+  if (stepIndex < 9) return '第一轮选择';
+  if (stepIndex < 12) return '第二轮禁用';
+  if (stepIndex < 18) return '第二轮选择';
+  if (stepIndex < 22) return '第三轮禁用';
   return '第三轮选择';
 }
 
