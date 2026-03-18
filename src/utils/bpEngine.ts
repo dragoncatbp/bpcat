@@ -1,18 +1,24 @@
 /**
  * BP引擎 - 处理Dota2 Captain's Mode的BP逻辑
  * 基于7.40版本的BP规则 (2025年12月更新)
+ * 
+ * 7.40 CM规则变化：
+ * - 第一轮Ban阶段顺序：旧 先-后-后-先-后-后-先 → 新 先-先-后-后-先-后-后
+ * - 第三轮Ban阶段顺序：旧 先-后-后-先 → 新 先-后-先-后
+ * 
+ * 参考来源：Liquipedia Dota 2 Wiki, Valve官方更新日志
  */
 
 import type { Team, PhaseType, BPStep, BPDraft } from '@/types';
 
 // CM模式BP顺序（先选方视角）- Dota 2 7.40版本
-// 7.40更新：第一轮和第三轮ban阶段顺序改变
 // 先选方: 'radiant', 后选方: 'dire'
-// 总计：每方5个pick，7个ban
+// 总计：每方5个pick，7个ban，24步
 export const CM_SEQUENCE: { team: Team; type: PhaseType }[] = [
-  // Ban Phase 1: 先2后2先1后2 (7.40新顺序)
-  // 旧: 先-后-后-先-后-后-先
-  // 新: 先-先-后-后-先-后-后
+  // ==========================================
+  // Ban Phase 1 (7个ban)
+  // 7.40变化：旧 先-后-后-先-后-后-先 → 新 先-先-后-后-先-后-后
+  // ==========================================
   { team: 'radiant', type: 'ban' },   // 1 - 先选方ban #1
   { team: 'radiant', type: 'ban' },   // 2 - 先选方ban #2
   { team: 'dire', type: 'ban' },      // 3 - 后选方ban #1
@@ -21,16 +27,25 @@ export const CM_SEQUENCE: { team: Team; type: PhaseType }[] = [
   { team: 'dire', type: 'ban' },      // 6 - 后选方ban #3
   { team: 'dire', type: 'ban' },      // 7 - 后选方ban #4
   
-  // Pick Phase 1: 先1后1 (2个)
+  // ==========================================
+  // Pick Phase 1 (2个pick)
+  // 顺序: 先-后
+  // ==========================================
   { team: 'radiant', type: 'pick' },  // 8 - 先选方pick #1
   { team: 'dire', type: 'pick' },     // 9 - 后选方pick #1
   
-  // Ban Phase 2: 先2后1 (3个)
+  // ==========================================
+  // Ban Phase 2 (3个ban)
+  // 顺序: 先-先-后
+  // ==========================================
   { team: 'radiant', type: 'ban' },   // 10 - 先选方ban #4
   { team: 'radiant', type: 'ban' },   // 11 - 先选方ban #5
   { team: 'dire', type: 'ban' },      // 12 - 后选方ban #5
   
-  // Pick Phase 2: 后1先2后2先1 (6个)
+  // ==========================================
+  // Pick Phase 2 (6个pick)
+  // 顺序: 后-先-先-后-后-先
+  // ==========================================
   { team: 'dire', type: 'pick' },     // 13 - 后选方pick #2
   { team: 'radiant', type: 'pick' },  // 14 - 先选方pick #2
   { team: 'radiant', type: 'pick' },  // 15 - 先选方pick #3
@@ -38,18 +53,45 @@ export const CM_SEQUENCE: { team: Team; type: PhaseType }[] = [
   { team: 'dire', type: 'pick' },     // 17 - 后选方pick #4
   { team: 'radiant', type: 'pick' },  // 18 - 先选方pick #4
   
-  // Ban Phase 3: 先1后1先1后1 (7.40新顺序，4个)
-  // 旧: 先-后-后-先
-  // 新: 先-后-先-后
+  // ==========================================
+  // Ban Phase 3 (4个ban)
+  // 7.40变化：旧 先-后-后-先 → 新 先-后-先-后
+  // ==========================================
   { team: 'radiant', type: 'ban' },   // 19 - 先选方ban #6
   { team: 'dire', type: 'ban' },      // 20 - 后选方ban #6
   { team: 'radiant', type: 'ban' },   // 21 - 先选方ban #7
   { team: 'dire', type: 'ban' },      // 22 - 后选方ban #7
   
-  // Pick Phase 3: 先1后1 (2个)
+  // ==========================================
+  // Pick Phase 3 (2个pick)
+  // 顺序: 先-后
+  // ==========================================
   { team: 'radiant', type: 'pick' },  // 23 - 先选方pick #5
   { team: 'dire', type: 'pick' },     // 24 - 后选方pick #5
 ];
+
+// 验证BP序列
+export function validateCMSequence(): { radiantPicks: number; direPicks: number; radiantBans: number; direBans: number; total: number } {
+  let rPicks = 0, dPicks = 0, rBans = 0, dBans = 0;
+  
+  for (const step of CM_SEQUENCE) {
+    if (step.type === 'pick') {
+      if (step.team === 'radiant') rPicks++;
+      else dPicks++;
+    } else {
+      if (step.team === 'radiant') rBans++;
+      else dBans++;
+    }
+  }
+  
+  return {
+    radiantPicks: rPicks,
+    direPicks: dPicks,
+    radiantBans: rBans,
+    direBans: dBans,
+    total: CM_SEQUENCE.length
+  };
+}
 
 // 如果夜魇先选，交换队伍
 function getAdjustedSequence(isRadiantFirst: boolean): { team: Team; type: PhaseType }[] {
@@ -225,3 +267,6 @@ export function getDraftStats(draft: BPDraft) {
     progress: Math.round((draft.currentStep / draft.steps.length) * 100),
   };
 }
+
+// 导出序列供验证
+export { getAdjustedSequence };
