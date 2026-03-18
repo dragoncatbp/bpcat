@@ -3,6 +3,7 @@ import type { Team, Player } from '@/types/team';
 import { 
   loadTeamsFromStorage, 
   saveTeamsToStorage, 
+  setMainTeam,
   generateId, 
   toSteamId64,
   positionNames,
@@ -87,6 +88,13 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     if (selectedTeamId === teamId) {
       onSelectTeam?.(null);
     }
+  };
+
+  // 设为主队
+  const handleSetMainTeam = (teamId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMainTeam(teamId);
+    setTeams(loadTeamsFromStorage());
   };
 
   // 添加/编辑队员
@@ -303,10 +311,13 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
             {teams.map(team => (
               <div 
                 key={team.id} 
-                className={`team-card ${selectedTeamId === team.id ? 'selected' : ''}`}
+                className={`team-card ${selectedTeamId === team.id ? 'selected' : ''} ${team.isMainTeam ? 'main-team' : ''}`}
               >
                 <div className="team-info" onClick={() => onSelectTeam?.(team)}>
-                  <h4>{team.name}</h4>
+                  <div className="team-header-row">
+                    <h4>{team.name}</h4>
+                    {team.isMainTeam && <span className="main-badge">⭐ 主队</span>}
+                  </div>
                   <p className="team-desc">{team.description || '暂无描述'}</p>
                   <p className="team-stats">
                     队员: {team.players.length}人 | 
@@ -314,6 +325,15 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
                   </p>
                 </div>
                 <div className="team-actions">
+                  {!team.isMainTeam && (
+                    <button 
+                      className="btn-main" 
+                      onClick={(e) => handleSetMainTeam(team.id, e)}
+                      title="设定为主队"
+                    >
+                      设为主队
+                    </button>
+                  )}
                   <button onClick={() => editTeam(team)}>管理</button>
                   <button className="danger" onClick={() => deleteTeam(team.id)}>删除</button>
                 </div>

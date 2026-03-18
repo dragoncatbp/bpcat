@@ -730,6 +730,113 @@ body {
   margin-bottom: 0.25rem;
 }
 
+/* ===== 对手选择 ===== */
+.opponent-selector {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.opponent-selector h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.opponent-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.opponent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.opponent-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.opponent-btn:hover {
+  background: var(--bg-hover);
+}
+
+.opponent-btn.active {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.opponent-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.opponent-players {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.opponent-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.opponent-info h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.85rem;
+  color: #f87171;
+}
+
+.opponent-heroes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.opponent-player {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-dark);
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.opponent-player .player-name {
+  font-size: 0.8rem;
+  flex: 1;
+}
+
+.signature-heroes {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.opponent-hero-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* 主队面板 */
+.main-team-panel {
+  border-left: 3px solid #f59e0b;
+}
+
 /* ===== 克制提示 ===== */
 .counter-tips {
   background: var(--bg-card);

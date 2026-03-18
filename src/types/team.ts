@@ -44,6 +44,7 @@ export interface Team {
   updatedAt: string;
   players: Player[];      // 队员列表
   captainId?: string;     // 队长ID
+  isMainTeam?: boolean;   // 是否为主队
 }
 
 export const positionNames: Record<Position, string> = {
@@ -82,6 +83,32 @@ export function saveTeamsToStorage(teams: Team[]): void {
   } catch (e) {
     console.error('Failed to save teams:', e);
   }
+}
+
+// 获取主队
+export function getMainTeam(): Team | null {
+  const teams = loadTeamsFromStorage();
+  return teams.find(t => t.isMainTeam) || null;
+}
+
+// 设置主队
+export function setMainTeam(teamId: string): void {
+  const teams = loadTeamsFromStorage();
+  const updatedTeams = teams.map(t => ({
+    ...t,
+    isMainTeam: t.id === teamId
+  }));
+  saveTeamsToStorage(updatedTeams);
+}
+
+// 取消主队设置
+export function clearMainTeam(): void {
+  const teams = loadTeamsFromStorage();
+  const updatedTeams = teams.map(t => ({
+    ...t,
+    isMainTeam: false
+  }));
+  saveTeamsToStorage(updatedTeams);
 }
 
 // 生成唯一ID

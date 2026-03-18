@@ -124,6 +124,37 @@
   background: rgba(248, 113, 113, 0.1);
 }
 
+/* 主队按钮 */
+.team-actions button.btn-main {
+  color: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.team-actions button.btn-main:hover {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* 主队卡片样式 */
+.team-card.main-team {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.team-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.main-badge {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
 /* 表单样式 */
 .team-form,
 .player-form {

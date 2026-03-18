@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { HeroGrid } from '@/components/HeroGrid';
 import { BPPanel } from '@/components/BPPanel';
 import { TeamAnalysis } from '@/components/TeamAnalysis';
@@ -8,9 +8,14 @@ import { TeamManager } from '@/components/TeamManager';
 import { BPHistory } from '@/components/BPHistory';
 import { SideSelector } from '@/components/SideSelector';
 import { BPEvaluation } from '@/components/BPEvaluation';
+import { OpponentSelector } from '@/components/OpponentSelector';
 import type { Team } from '@/types/team';
 import type { BPDraft } from '@/types';
 import type { Team as BPTeam } from '@/types';
+import { 
+  loadTeamsFromStorage,
+  getMainTeam,
+} from '@/types/team';
 import { 
   createDraft, 
   makeSelection, 
@@ -30,6 +35,9 @@ type AppView = 'bp' | 'teams' | 'history';
 function App() {
   const [currentView, setCurrentView] = useState<AppView>('bp');
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const [mainTeam, setMainTeam] = useState<Team | null>(null);
+  const [opponentTeam, setOpponentTeam] = useState<Team | null>(null);
+  const [allTeams, setAllTeams] = useState<Team[]>([]);
   
   // BP相关状态
   const [draft, setDraft] = useState<BPDraft | null>(null);
@@ -38,6 +46,14 @@ function App() {
   const [showAnalysis] = useState(true);
   const [showCounters] = useState(true);
   const [showMembers] = useState(true);
+
+  // 加载主队和所有队伍
+  useEffect(() => {
+    const main = getMainTeam();
+    const teams = loadTeamsFromStorage();
+    setMainTeam(main);
+    setAllTeams(teams);
+  }, []);
 
   // 开始新的BP
   const startDraft = useCallback(() => {
@@ -58,6 +74,15 @@ function App() {
   const resetDraft = useCallback(() => {
     setDraft(null);
     setUserSide(null);
+    setOpponentTeam(null);
+  }, []);
+
+  // 刷新队伍数据
+  const refreshTeams = useCallback(() => {
+    const main = getMainTeam();
+    const teams = loadTeamsFromStorage();
+    setMainTeam(main);
+    setAllTeams(teams);
   }, []);
 
   // 撤回上一步
@@ -113,7 +138,10 @@ function App() {
           /* 队伍管理界面 */
           <div className="teams-view">
             <TeamManager 
-              onSelectTeam={setSelectedTeam}
+              onSelectTeam={(team) => {
+                setSelectedTeam(team);
+                refreshTeams();
+              }}
               selectedTeamId={selectedTeam?.id}
             />
             
@@ -402,13 +430,22 @@ function App() {
                   </button>
                 </div>
 
-                {/* 右侧：队员信息 */}
+                {/* 右侧：对手选择 + 队员信息 */}
                 <aside className="draft-sidebar right">
-                  {showMembers && selectedTeam && (
-                    <div className="team-players-panel">
-                      <h4>👥 {selectedTeam.name}</h4>
+                  {/* 对手选择 */}
+                  <OpponentSelector
+                    teams={allTeams}
+                    mainTeam={mainTeam}
+                    opponentTeam={opponentTeam}
+                    onSelectOpponent={setOpponentTeam}
+                  />
+                  
+                  {/* 主队成员信息 */}
+                  {showMembers && mainTeam && (
+                    <div className="team-players-panel main-team-panel">
+                      <h4>⭐ 主队: {mainTeam.name}</h4>
                       <div className="players-list-bp">
-                        {selectedTeam.players.map(player => (
+                        {mainTeam.players.map(player => (
                           <div key={player.id} className="player-item-bp">
                             <img 
                               src={player.avatar || '/default-avatar.png'} 
@@ -439,7 +476,7 @@ function App() {
                     </div>
                   )}
                   
-                  {!selectedTeam && <MemberSignatures />}
+                  {!mainTeam && <MemberSignatures />}
                 </aside>
               </div>
             )}
