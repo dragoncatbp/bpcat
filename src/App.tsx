@@ -6,8 +6,11 @@ import { CounterTips } from '@/components/CounterTips';
 import { MemberSignatures } from '@/components/MemberSignatures';
 import { TeamManager } from '@/components/TeamManager';
 import { BPHistory } from '@/components/BPHistory';
+import { SideSelector } from '@/components/SideSelector';
+import { BPEvaluation } from '@/components/BPEvaluation';
 import type { Team } from '@/types/team';
 import type { BPDraft } from '@/types';
+import type { Team as BPTeam } from '@/types';
 import { 
   createDraft, 
   makeSelection, 
@@ -31,6 +34,7 @@ function App() {
   // BP相关状态
   const [draft, setDraft] = useState<BPDraft | null>(null);
   const [isRadiantFirst, setIsRadiantFirst] = useState(true);
+  const [userSide, setUserSide] = useState<BPTeam | null>(null);
   const [showAnalysis] = useState(true);
   const [showCounters] = useState(true);
   const [showMembers] = useState(true);
@@ -53,6 +57,7 @@ function App() {
   // 重置BP
   const resetDraft = useCallback(() => {
     setDraft(null);
+    setUserSide(null);
   }, []);
 
   // 撤回上一步
@@ -238,22 +243,47 @@ function App() {
             ) : (
               /* BP界面 */
               <div className="draft-layout">
-                {/* 左侧：阵容分析和克制提示 */}
+                {/* 左侧：阵营选择、阵容分析和评价 */}
                 <aside className="draft-sidebar left">
-                  {showAnalysis && (
-                    <TeamAnalysis 
-                      radiantPicks={draft.radiantPicks} 
-                      direPicks={draft.direPicks} 
+                  {/* 阵营选择 */}
+                  {!userSide ? (
+                    <SideSelector 
+                      userSide={userSide}
+                      onSelectSide={setUserSide}
                     />
-                  )}
-                  
-                  {showCounters && currentStep && (
-                    <CounterTips 
-                      radiantPicks={draft.radiantPicks}
-                      direPicks={draft.direPicks}
-                      currentTeam={currentStep.team}
-                      bannedHeroes={bannedHeroes}
-                    />
+                  ) : (
+                    <>
+                      <div className="user-side-indicator" style={{ 
+                        background: userSide === 'radiant' ? 'rgba(74, 222, 128, 0.1)' : 'rgba(248, 113, 113, 0.1)',
+                        borderLeft: `3px solid ${userSide === 'radiant' ? '#4ade80' : '#f87171'}`
+                      }}>
+                        <span>当前视角: <strong style={{ color: userSide === 'radiant' ? '#4ade80' : '#f87171' }}>
+                          {userSide === 'radiant' ? '天辉' : '夜魇'}
+                        </strong></span>
+                        <button className="btn-link" onClick={() => setUserSide(null)}>切换</button>
+                      </div>
+                      
+                      {showAnalysis && (
+                        <TeamAnalysis 
+                          radiantPicks={draft.radiantPicks} 
+                          direPicks={draft.direPicks} 
+                        />
+                      )}
+                      
+                      {/* 基于阵营的详细评价 */}
+                      {(draft.radiantPicks.length > 0 || draft.direPicks.length > 0) && (
+                        <BPEvaluation draft={draft} userSide={userSide} />
+                      )}
+                      
+                      {showCounters && currentStep && userSide === currentStep.team && (
+                        <CounterTips 
+                          radiantPicks={draft.radiantPicks}
+                          direPicks={draft.direPicks}
+                          currentTeam={currentStep.team}
+                          bannedHeroes={bannedHeroes}
+                        />
+                      )}
+                    </>
                   )}
                 </aside>
 

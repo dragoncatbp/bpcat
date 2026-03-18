@@ -493,6 +493,243 @@ body {
   text-align: right;
 }
 
+/* ===== 阵营选择 ===== */
+.side-selector {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.side-selector h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.side-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.side-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.side-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  background: var(--bg-dark);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+}
+
+.side-btn:hover {
+  background: var(--bg-hover);
+}
+
+.side-btn.active.radiant {
+  border-color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.side-btn.active.dire {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.side-icon {
+  font-size: 1.5rem;
+}
+
+.side-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.side-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* 用户阵营指示器 */
+.user-side-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ===== BP评价面板 ===== */
+.bp-evaluation-panel {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.bp-evaluation-panel h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.eval-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eval-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.eval-side.my-side .eval-score {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.eval-side.enemy-side .eval-score {
+  font-size: 1.5rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.eval-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.eval-level {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.eval-vs {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.eval-detail {
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 3px solid;
+}
+
+.eval-detail h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.eval-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.eval-score-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.score-label {
+  width: 70px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.score-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-card);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.score-value {
+  width: 24px;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.eval-section {
+  margin-top: 0.75rem;
+}
+
+.eval-section:first-of-type {
+  margin-top: 0;
+}
+
+.section-title {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.eval-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.eval-tag {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.eval-tag.my-tag {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.eval-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.eval-list li {
+  margin-bottom: 0.25rem;
+}
+
 /* ===== 克制提示 ===== */
 .counter-tips {
   background: var(--bg-card);
