@@ -252,6 +252,14 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
+  align-items: start;
+}
+
+/* 当没有选中队伍时，TeamManager居中显示 */
+.teams-view > :first-child:last-child {
+  grid-column: 1 / -1;
+  max-width: 800px;
+  justify-self: center;
 }
 
 .selected-team-info {

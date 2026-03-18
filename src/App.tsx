@@ -5,6 +5,7 @@ import { TeamAnalysis } from '@/components/TeamAnalysis';
 import { CounterTips } from '@/components/CounterTips';
 import { MemberSignatures } from '@/components/MemberSignatures';
 import { TeamManager } from '@/components/TeamManager';
+import { PlayerPool } from '@/components/PlayerPool';
 import { BPHistory } from '@/components/BPHistory';
 import { SideSelector } from '@/components/SideSelector';
 import { BPEvaluation } from '@/components/BPEvaluation';
@@ -31,7 +32,7 @@ import { evaluateDraft, getScoreColor, getScoreLevel } from '@/utils/bpEvaluatio
 import heroesData from '@/data/heroes.json';
 import './App.css';
 
-type AppView = 'bp' | 'teams' | 'history' | 'pro';
+type AppView = 'bp' | 'teams' | 'history' | 'pro' | 'players';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>('bp');
@@ -137,6 +138,12 @@ function App() {
           >
             👥 队伍管理
           </button>
+          <button 
+            className={currentView === 'players' ? 'active' : ''}
+            onClick={() => setCurrentView('players')}
+          >
+            🏅 选手池
+          </button>
         </nav>
       </header>
 
@@ -184,6 +191,11 @@ function App() {
           <div className="pro-view">
             <ProMatches />
           </div>
+        ) : currentView === 'players' ? (
+          /* 选手池界面 */
+          <div className="players-view">
+            <PlayerPool />
+          </div>
         ) : (
           /* BP界面 */
           <>
@@ -211,9 +223,10 @@ function App() {
                         {selectedTeam.players.map(player => (
                           <div key={player.id} className="player-mini">
                             <img 
-                              src={player.avatar || '/default-avatar.png'} 
+                              src={player.avatar || '/default-avatar.svg'} 
                               alt="" 
                               className="mini-avatar"
+                              onError={(e) => { (e.target as HTMLImageElement).src = '/default-avatar.svg'; }}
                             />
                             <span>{player.name}</span>
                           </div>
@@ -460,7 +473,7 @@ function App() {
                         {mainTeam.players.map(player => (
                           <div key={player.id} className="player-item-bp">
                             <img 
-                              src={player.avatar || '/default-avatar.png'} 
+                              src={player.avatar || '/default-avatar.svg'} 
                               alt="" 
                               className="player-avatar-bp"
                             />

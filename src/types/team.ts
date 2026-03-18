@@ -10,12 +10,31 @@ export interface Player {
   steamId?: string;       // Steam ID (数字ID或SteamID64)
   steamId64?: string;     // SteamID64 (17位数字)
   position: Position[];   // 擅长位置
-  signatureHeroes: number[];  // 招牌英雄ID列表
+  signatureHeroes: number[];  // 招牌英雄ID列表（向后兼容）
+  signatureCoreHeroes: number[];    // 擅长核心英雄（1/2/3号位）
+  signatureSupportHeroes: number[]; // 擅长辅助英雄（4/5号位）
   goodHeroes: number[];   // 熟练英雄
   avoidHeroes: number[];  // 避免英雄
   avatar?: string;        // Steam头像URL
   playstyle?: string;     // 打法风格
   notes?: string;         // 备注
+  
+  // 评分系统（按位置类型分开）
+  ratings?: {
+    // 核心位评分 (1,2,3号位)
+    core?: {
+      score: number;  // 综合评分 1-12
+    };
+    // 辅助位评分 (4,5号位)
+    support?: {
+      score: number;  // 综合评分 1-12
+    };
+    notes?: string;    // 评分备注
+    updatedAt?: string; // 评分更新时间
+  };
+  
+  // 所属队伍ID列表
+  teamIds?: string[];
   
   // Steam数据（从API获取）
   steamData?: {
@@ -161,4 +180,111 @@ export function toAccountId(steamId64: string): string | null {
   } catch {
     return null;
   }
+}
+
+// ============ 玩家池管理（全局玩家库）============
+
+const PLAYERS_STORAGE_KEY = 'bpcat_players_pool';
+
+// 从localStorage加载玩家池
+export function loadPlayersPool(): Player[] {
+  try {
+    const data = localStorage.getItem(PLAYERS_STORAGE_KEY);
+    if (data) {
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    console.error('Failed to load players pool:', e);
+  }
+  return [];
+}
+
+// 保存玩家池到localStorage
+export function savePlayersPool(players: Player[]): void {
+  try {
+    localStorage.setItem(PLAYERS_STORAGE_KEY, JSON.stringify(players));
+  } catch (e) {
+    console.error('Failed to save players pool:', e);
+  }
+}
+
+// 添加或更新玩家
+export function upsertPlayer(player: Player): void {
+  const players = loadPlayersPool();
+  const existingIndex = players.findIndex(p => p.id === player.id);
+  
+  if (existingIndex >= 0) {
+    players[existingIndex] = { ...players[existingIndex], ...player };
+  } else {
+    players.push(player);
+  }
+  
+  savePlayersPool(players);
+}
+
+// 删除玩家
+export function deletePlayer(playerId: string): void {
+  const players = loadPlayersPool();
+  const filtered = players.filter(p => p.id !== playerId);
+  savePlayersPool(filtered);
+}
+
+// 获取玩家
+export function getPlayer(playerId: string): Player | null {
+  const players = loadPlayersPool();
+  return players.find(p => p.id === playerId) || null;
+}
+
+// 更新玩家所属队伍
+export function updatePlayerTeams(playerId: string, teamIds: string[]): void {
+  const player = getPlayer(playerId);
+  if (player) {
+    player.teamIds = teamIds;
+    upsertPlayer(player);
+  }
+}
+
+// 同步队伍中的玩家到玩家池
+export function syncTeamPlayersToPool(team: Team): void {
+  const players = loadPlayersPool();
+  
+  for (const teamPlayer of team.players) {
+    const existingIndex = players.findIndex(p => p.id === teamPlayer.id);
+    
+    if (existingIndex >= 0) {
+      // 更新现有玩家，保留评分等信息
+      const existing = players[existingIndex];
+      players[existingIndex] = {
+        ...teamPlayer,
+        ratings: existing.ratings,
+        teamIds: [...new Set([...(existing.teamIds || []), team.id])]
+      };
+    } else {
+      // 添加新玩家
+      players.push({
+        ...teamPlayer,
+        teamIds: [team.id]
+      });
+    }
+  }
+  
+  savePlayersPool(players);
+}
+
+// 获取评分（按位置类型）
+export function getRating(
+  ratings: Player['ratings'], 
+  type: 'core' | 'support'
+): number {
+  return ratings?.[type]?.score || 0;
+}
+
+// 判断玩家是否打核心位
+export function playsCore(position: Position[]): boolean {
+  return position.some(p => p <= 3);
+}
+
+// 判断玩家是否打辅助位
+export function playsSupport(position: Position[]): boolean {
+  return position.some(p => p >= 4);
 }

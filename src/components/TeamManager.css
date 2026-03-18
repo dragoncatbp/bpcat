@@ -23,6 +23,16 @@
   font-size: 1.1rem;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-player-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .btn-back {
   background: transparent;
   border: none;

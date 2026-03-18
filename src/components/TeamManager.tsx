@@ -4,16 +4,12 @@ import {
   loadTeamsFromStorage, 
   saveTeamsToStorage, 
   setMainTeam,
+  upsertPlayer,
   generateId, 
-  toSteamId64,
   positionNames,
-  type Position 
 } from '@/types/team';
-import { 
-  getCompletePlayerData, 
-  calculateRecentStats, 
-  getRankName 
-} from '@/services/opendota';
+import { getRankName } from '@/services/opendota';
+import { PlayerPool } from './PlayerPool';
 import heroesData from '@/data/heroes.json';
 import './TeamManager.css';
 
@@ -24,10 +20,8 @@ interface TeamManagerProps {
 
 export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [activeTab, setActiveTab] = useState<'list' | 'edit' | 'player'>('list');
+  const [activeTab, setActiveTab] = useState<'list' | 'edit' | 'add-from-pool'>('list');
   const [editingTeam, setEditingTeam] = useState<Team | null>(null);
-  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   // 加载队伍数据
   useEffect(() => {
@@ -97,36 +91,19 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     setTeams(loadTeamsFromStorage());
   };
 
-  // 添加/编辑队员
-  const editPlayer = (team: Team, player?: Player) => {
-    setEditingTeam(team);
-    setEditingPlayer(player || {
-      id: generateId(),
-      name: '',
-      position: [1],
-      signatureHeroes: [],
-      goodHeroes: [],
-      avoidHeroes: [],
-    });
-    setActiveTab('player');
-  };
-
-  // 保存队员
-  const savePlayer = () => {
-    if (!editingTeam || !editingPlayer) return;
+  // 从玩家池添加成员
+  const addPlayerFromPool = (player: Player) => {
+    if (!editingTeam) return;
     
-    const existingIndex = editingTeam.players.findIndex(p => p.id === editingPlayer.id);
-    let updatedPlayers: Player[];
-    
-    if (existingIndex >= 0) {
-      updatedPlayers = [...editingTeam.players];
-      updatedPlayers[existingIndex] = editingPlayer;
-    } else {
-      updatedPlayers = [...editingTeam.players, editingPlayer];
+    // 检查是否已在队伍中
+    if (editingTeam.players.some(p => p.id === player.id)) {
+      alert('该玩家已在队伍中！');
+      return;
     }
     
-    const updatedTeam = { 
-      ...editingTeam, 
+    const updatedPlayers = [...editingTeam.players, player];
+    const updatedTeam = {
+      ...editingTeam,
       players: updatedPlayers,
       updatedAt: new Date().toISOString(),
     };
@@ -135,14 +112,20 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     const newTeams = [...teams];
     if (teamIndex >= 0) {
       newTeams[teamIndex] = updatedTeam;
-    } else {
-      newTeams.push(updatedTeam);
     }
     
     saveTeams(newTeams);
+    
+    // 更新玩家的teamIds
+    const updatedPlayer = {
+      ...player,
+      teamIds: [...new Set([...(player.teamIds || []), editingTeam.id])]
+    };
+    upsertPlayer(updatedPlayer);
+    
     setEditingTeam(updatedTeam);
-    setEditingPlayer(null);
     setActiveTab('edit');
+    alert(`已将 ${player.name} 添加到队伍！`);
   };
 
   // 删除队员
@@ -162,130 +145,6 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     
     saveTeams(newTeams);
     setEditingTeam(updatedTeam);
-  };
-
-  // 查询Steam数据
-  const querySteamData = async (steamId: string) => {
-    if (!steamId) return;
-    
-    setIsLoading(true);
-    try {
-      const steamId64 = toSteamId64(steamId);
-      if (!steamId64) {
-        alert('无效的Steam ID');
-        return;
-      }
-      
-      const data = await getCompletePlayerData(steamId64);
-      
-      if (editingPlayer) {
-        const recentStats = calculateRecentStats(data.recentMatches);
-        
-        // 从近期战绩提取擅长英雄
-        let topHeroes = recentStats?.topHeroes?.map(h => h.heroId) || [];
-        
-        // 如果战绩数据不够，用总体数据补充
-        if (topHeroes.length < 5 && data.heroStats) {
-          const sortedHeroes = data.heroStats
-            .sort((a, b) => b.games - a.games)
-            .slice(0, 5)
-            .map(h => parseInt(h.hero_id));
-          
-          // 合并去重
-          topHeroes = [...new Set([...topHeroes, ...sortedHeroes])].slice(0, 5);
-        }
-        
-        setEditingPlayer({
-          ...editingPlayer,
-          steamId,
-          steamId64,
-          name: data.profile?.personaname || editingPlayer.name,
-          avatar: data.profile?.avatar,
-          steamData: {
-            rank: data.rank?.rank_tier,
-            leaderboardRank: data.rank?.leaderboard_rank,
-            wins: data.winLoss?.win,
-            losses: data.winLoss?.lose,
-            lastMatchDate: data.recentMatches?.[0]?.start_time?.toString(),
-          },
-          ...(recentStats && { recentStats }),
-          // 如果还没有设置招牌英雄，自动填入近期常用英雄
-          signatureHeroes: editingPlayer.signatureHeroes.length > 0 
-            ? editingPlayer.signatureHeroes 
-            : topHeroes.slice(0, 3),
-          goodHeroes: editingPlayer.goodHeroes.length > 0 
-            ? editingPlayer.goodHeroes 
-            : topHeroes.slice(3),
-        });
-      }
-    } catch (error) {
-      alert('查询失败，请检查Steam ID是否正确');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // 英雄选择器
-  const HeroSelector = ({ 
-    selected, 
-    onSelect, 
-    max = 10, 
-    label 
-  }: { 
-    selected: number[]; 
-    onSelect: (heroes: number[]) => void; 
-    max?: number;
-    label: string;
-  }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    
-    return (
-      <div className="hero-selector">
-        <label>{label} ({selected.length}/{max})</label>
-        <div className="selected-heroes" onClick={() => setIsOpen(!isOpen)}>
-          {selected.length === 0 ? (
-            <span className="placeholder">点击选择英雄</span>
-          ) : (
-            selected.map(heroId => {
-              const hero = heroesData.find(h => h.id === heroId);
-              return (
-                <img 
-                  key={heroId} 
-                  src={hero?.image} 
-                  alt={hero?.localizedName}
-                  className="selected-hero-img"
-                  title={hero?.localizedName}
-                />
-              );
-            })
-          )}
-        </div>
-        
-        {isOpen && (
-          <div className="hero-dropdown">
-            <div className="hero-grid-small">
-              {heroesData.map(hero => (
-                <button
-                  key={hero.id}
-                  className={`hero-option ${selected.includes(hero.id) ? 'selected' : ''}`}
-                  onClick={() => {
-                    if (selected.includes(hero.id)) {
-                      onSelect(selected.filter(id => id !== hero.id));
-                    } else if (selected.length < max) {
-                      onSelect([...selected, hero.id]);
-                    }
-                  }}
-                >
-                  <img src={hero.image} alt={hero.localizedName} />
-                  <span>{hero.localizedName}</span>
-                </button>
-              ))}
-            </div>
-            <button className="close-btn" onClick={() => setIsOpen(false)}>完成</button>
-          </div>
-        )}
-      </div>
-    );
   };
 
   // 队伍列表界面
@@ -385,8 +244,8 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
         <div className="players-section">
           <div className="section-header">
             <h4>队员列表 ({editingTeam.players.length})</h4>
-            <button className="btn-secondary" onClick={() => editPlayer(editingTeam)}>
-              + 添加队员
+            <button className="btn-secondary" onClick={() => setActiveTab('add-from-pool')}>
+              📋 从玩家池添加
             </button>
           </div>
           
@@ -397,9 +256,10 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
               {editingTeam.players.map(player => (
                 <div key={player.id} className="player-card">
                   <img 
-                    src={player.avatar || '/default-avatar.png'} 
+                    src={player.avatar || '/default-avatar.svg'} 
                     alt="" 
                     className="player-avatar"
+                    onError={(e) => { (e.target as HTMLImageElement).src = '/default-avatar.svg'; }}
                   />
                   <div className="player-info">
                     <span className="player-name">{player.name}</span>
@@ -426,7 +286,6 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
                     })}
                   </div>
                   <div className="player-actions">
-                    <button onClick={() => editPlayer(editingTeam, player)}>编辑</button>
                     <button className="danger" onClick={() => deletePlayer(player.id)}>删除</button>
                   </div>
                 </div>
@@ -438,188 +297,21 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     );
   }
 
-  // 编辑队员界面
-  if (activeTab === 'player' && editingTeam && editingPlayer) {
+  // 从玩家池添加成员界面
+  if (activeTab === 'add-from-pool' && editingTeam) {
     return (
       <div className="team-manager">
         <div className="manager-header">
           <button className="btn-back" onClick={() => setActiveTab('edit')}>
             ← 返回
           </button>
-          <h3>{editingPlayer.id.includes('-') ? '编辑队员' : '添加队员'}</h3>
+          <h3>从选手池添加成员 - {editingTeam.name}</h3>
         </div>
         
-        <div className="player-form">
-          {/* Steam ID 查询 */}
-          <div className="form-group steam-query">
-            <label>Steam ID / SteamID64</label>
-            <div className="input-group">
-              <input
-                type="text"
-                value={editingPlayer.steamId || ''}
-                onChange={e => setEditingPlayer({ ...editingPlayer, steamId: e.target.value })}
-                placeholder="输入Steam ID (如: 123456789 或 STEAM_0:1:123456)"
-              />
-              <button 
-                className="btn-primary" 
-                onClick={() => querySteamData(editingPlayer.steamId || '')}
-                disabled={isLoading || !editingPlayer.steamId}
-              >
-                {isLoading ? '查询中...' : '🔍 查询天梯数据'}
-              </button>
-            </div>
-            <p className="hint">支持17位数字ID、SteamID格式，查询后会自动获取天梯段位和近期战绩</p>
-          </div>
-          
-          {/* Steam数据显示 */}
-          {editingPlayer.steamData && (
-            <div className="steam-data">
-              <h4>📊 Steam数据</h4>
-              <div className="data-grid">
-                {editingPlayer.avatar && (
-                  <img src={editingPlayer.avatar} alt="" className="steam-avatar" />
-                )}
-                <div className="data-item">
-                  <span className="label">天梯段位</span>
-                  <span className="value rank">{getRankName(editingPlayer.steamData.rank)}</span>
-                </div>
-                {editingPlayer.steamData.leaderboardRank && (
-                  <div className="data-item">
-                    <span className="label">排行榜</span>
-                    <span className="value highlight">#{editingPlayer.steamData.leaderboardRank}</span>
-                  </div>
-                )}
-                <div className="data-item">
-                  <span className="label">总场次</span>
-                  <span className="value">
-                    {((editingPlayer.steamData.wins || 0) + (editingPlayer.steamData.losses || 0)).toLocaleString()}场
-                  </span>
-                </div>
-                <div className="data-item">
-                  <span className="label">胜率</span>
-                  <span className="value">
-                    {editingPlayer.steamData.wins && editingPlayer.steamData.losses
-                      ? Math.round((editingPlayer.steamData.wins / (editingPlayer.steamData.wins + editingPlayer.steamData.losses)) * 100)
-                      : 0}%
-                  </span>
-                </div>
-              </div>
-              
-              {/* 近期战绩 */}
-              {editingPlayer.recentStats && (
-                <div className="recent-stats">
-                  <h5>近期20场战绩</h5>
-                  <div className="stats-row">
-                    <span className={`win-rate ${(editingPlayer.recentStats.winRate) >= 50 ? 'good' : 'bad'}`}>
-                      {editingPlayer.recentStats.winRate}% 胜率
-                    </span>
-                    <span>{editingPlayer.recentStats.wins}胜 / {editingPlayer.recentStats.matches - editingPlayer.recentStats.wins}负</span>
-                  </div>
-                  <div className="top-heroes">
-                    <span>常用英雄:</span>
-                    {editingPlayer.recentStats.topHeroes.map(h => {
-                      const hero = heroesData.find(hero => hero.id === h.heroId);
-                      return (
-                        <div key={h.heroId} className="top-hero" title={`${hero?.localizedName} - ${h.games}场 ${h.winRate}%胜率`}>
-                          <img src={hero?.image} alt={hero?.localizedName} />
-                          <span className="games">{h.games}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          
-          {/* 基本信息 */}
-          <div className="form-group">
-            <label>队员昵称 *</label>
-            <input
-              type="text"
-              value={editingPlayer.name}
-              onChange={e => setEditingPlayer({ ...editingPlayer, name: e.target.value })}
-              placeholder="输入队员昵称"
-            />
-          </div>
-          
-          {/* 位置选择 */}
-          <div className="form-group">
-            <label>擅长位置</label>
-            <div className="position-selector">
-              {[1, 2, 3, 4, 5].map(pos => (
-                <label key={pos} className="position-checkbox">
-                  <input
-                    type="checkbox"
-                    checked={editingPlayer.position.includes(pos as Position)}
-                    onChange={e => {
-                      if (e.target.checked) {
-                        setEditingPlayer({ 
-                          ...editingPlayer, 
-                          position: [...editingPlayer.position, pos as Position].sort() 
-                        });
-                      } else {
-                        setEditingPlayer({ 
-                          ...editingPlayer, 
-                          position: editingPlayer.position.filter(p => p !== pos) 
-                        });
-                      }
-                    }}
-                  />
-                  <span>{positionNames[pos as Position]}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-          
-          {/* 英雄选择 */}
-          <HeroSelector
-            label="招牌英雄（最擅长）"
-            selected={editingPlayer.signatureHeroes}
-            onSelect={heroes => setEditingPlayer({ ...editingPlayer, signatureHeroes: heroes })}
-            max={5}
-          />
-          
-          <HeroSelector
-            label="熟练英雄（会玩）"
-            selected={editingPlayer.goodHeroes}
-            onSelect={heroes => setEditingPlayer({ ...editingPlayer, goodHeroes: heroes })}
-            max={10}
-          />
-          
-          <HeroSelector
-            label="避免英雄（尽量不选）"
-            selected={editingPlayer.avoidHeroes}
-            onSelect={heroes => setEditingPlayer({ ...editingPlayer, avoidHeroes: heroes })}
-            max={5}
-          />
-          
-          {/* 打法风格 */}
-          <div className="form-group">
-            <label>打法风格</label>
-            <input
-              type="text"
-              value={editingPlayer.playstyle || ''}
-              onChange={e => setEditingPlayer({ ...editingPlayer, playstyle: e.target.value })}
-              placeholder="如：激进型、发育型、节奏型等"
-            />
-          </div>
-          
-          {/* 备注 */}
-          <div className="form-group">
-            <label>备注</label>
-            <textarea
-              value={editingPlayer.notes || ''}
-              onChange={e => setEditingPlayer({ ...editingPlayer, notes: e.target.value })}
-              placeholder="其他备注信息"
-              rows={2}
-            />
-          </div>
-          
-          <button className="btn-primary" onClick={savePlayer} disabled={!editingPlayer.name}>
-            保存队员
-          </button>
-        </div>
+        <PlayerPool 
+          onSelectPlayer={addPlayerFromPool}
+          selectionMode={true}
+        />
       </div>
     );
   }

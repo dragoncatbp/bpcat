@@ -143,18 +143,20 @@ export async function getRecentMatches(steamId64: string): Promise<PlayerRecentM
 }
 
 // 天梯段位名称
-// rank_tier: 11-15=先锋, 16-20=卫士, 21-25=中军, 26-30=统帅, 31-35=传奇, 36-40=万古, 41-45=超凡, 46-50=冠绝
+// rank_tier 格式: 十位数字=奖牌等级(1-8), 个位数字=星级(1-5)
+// 11-15=先锋, 16-20=卫士, 21-25=中军, 26-30=统帅, 31-35=传奇, 36-40=万古, 41-45=超凡, 46-80=冠绝
 export function getRankName(rankTier?: number): string {
   if (!rankTier || rankTier < 11) return '未校准';
   
   const medals = ['先锋', '卫士', '中军', '统帅', '传奇', '万古流芳', '超凡入圣', '冠绝一世'];
   
-  // 最高到冠绝一世 (50)
-  const clampedRank = Math.min(rankTier, 50);
+  // 十位数字决定奖牌 (1=先锋, 2=卫士, ..., 8=冠绝)
+  const medalDigit = Math.floor(rankTier / 10);
+  // 个位数字决定星级 (1-5)
+  const starDigit = rankTier % 10;
   
-  // 每个大段位有5个星级，所以除以5
-  const medalIndex = Math.floor((clampedRank - 11) / 5);
-  const star = ((clampedRank - 11) % 5) + 1;
+  // 奖牌索引 (减1因为数组从0开始)
+  const medalIndex = medalDigit - 1;
   
   if (medalIndex >= 0 && medalIndex < medals.length) {
     const medalName = medals[medalIndex];
@@ -162,6 +164,8 @@ export function getRankName(rankTier?: number): string {
     if (medalName === '冠绝一世') {
       return medalName;
     }
+    // 星级最多5
+    const star = Math.min(starDigit, 5);
     return `${medalName} ${star}`;
   }
   return '未知';

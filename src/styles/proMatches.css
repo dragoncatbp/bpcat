@@ -1,0 +1,1210 @@
+/* 职业BP样式 */
+.pro-matches {
+  background: #1a1d29;
+  border-radius: 12px;
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.pro-matches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pro-matches-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.pro-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.pro-tabs button {
+  padding: 6px 14px;
+  border: 1px solid #3d4450;
+  background: #252a3a;
+  color: #8b92a8;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.pro-tabs button:hover {
+  background: #2d3347;
+  color: #fff;
+}
+
+.pro-tabs button.active {
+  background: #4c5fe8;
+  border-color: #4c5fe8;
+  color: #fff;
+}
+
+.pro-filter {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #3d4450;
+  background: #252a3a;
+  color: #fff;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.pro-filter:focus {
+  outline: none;
+  border-color: #4c5fe8;
+}
+
+/* 比赛列表 */
+.pro-matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pro-match-card {
+  background: #252a3a;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #3d4450;
+}
+
+.pro-match-card:hover {
+  border-color: #4c5fe8;
+}
+
+.pro-match-card.active {
+  border-color: #4c5fe8;
+  background: #2d3347;
+}
+
+.match-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.match-header .tournament {
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+}
+
+.match-header .date {
+  color: #8b92a8;
+  font-size: 12px;
+}
+
+.tier {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.tier-1 { background: #ff6b6b; color: #fff; }
+.tier-2 { background: #ffd93d; color: #000; }
+.tier-3 { background: #6bcf7f; color: #000; }
+
+/* 队伍和胜负显示 */
+.match-teams-with-winner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.team-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.team-side.radiant {
+  background: linear-gradient(135deg, #1b4d3e 0%, #0f2f26 100%);
+  border: 1px solid #27ae60;
+}
+
+.team-side.dire {
+  background: linear-gradient(135deg, #4d1b1b 0%, #2f0f0f 100%);
+  border: 1px solid #e74c3c;
+}
+
+.team-side.winner {
+  border-width: 2px;
+  box-shadow: 0 0 10px rgba(76, 95, 232, 0.3);
+}
+
+.team-side.loser {
+  opacity: 0.7;
+}
+
+.team-side .team-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.team-side .team-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+}
+
+.team-side .winner-badge {
+  font-size: 11px;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.team-side .team-score-section {
+  text-align: center;
+}
+
+.team-side .score {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.team-side .networth {
+  font-size: 11px;
+  color: #8b92a8;
+  display: block;
+}
+
+.vs-divider {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vs-divider .vs {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4c5fe8;
+}
+
+.vs-divider .duration {
+  font-size: 11px;
+  color: #8b92a8;
+}
+
+/* BP详情 */
+.match-bp-detail {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #3d4450;
+}
+
+.bp-timeline {
+  margin-bottom: 16px;
+}
+
+.bp-timeline h6 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #8b92a8;
+}
+
+.bp-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bp-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  border: 1px solid;
+}
+
+.bp-step.radiant.pick {
+  background: rgba(39, 174, 96, 0.15);
+  border-color: #27ae60;
+  color: #2ecc71;
+}
+
+.bp-step.dire.pick {
+  background: rgba(231, 76, 60, 0.15);
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.bp-step.radiant.ban,
+.bp-step.dire.ban {
+  background: rgba(139, 146, 168, 0.1);
+  border-color: #5a6075;
+  color: #8b92a8;
+}
+
+.bp-step img {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.bp-step .step-num {
+  font-weight: 700;
+  min-width: 14px;
+}
+
+.bp-step .step-type {
+  font-weight: 600;
+}
+
+.bp-step .step-hero {
+  min-width: 60px;
+}
+
+.bp-step .step-player {
+  color: #8b92a8;
+  font-size: 10px;
+}
+
+/* BP按队伍显示 */
+.bp-by-team {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.bp-team-section {
+  background: #1a1d29;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.bp-team-section h6 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #fff;
+}
+
+.bp-team-section.radiant h6 { color: #2ecc71; }
+.bp-team-section.dire h6 { color: #e74c3c; }
+
+.pb-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pb-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pb-group label {
+  font-size: 11px;
+  color: #8b92a8;
+}
+
+.pb-heroes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pb-hero {
+  position: relative;
+  width: 44px;
+  height: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1a1d29;
+}
+
+.pb-hero img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.pb-hero.ban img {
+  filter: grayscale(100%) brightness(0.4);
+}
+
+.pb-hero.pick {
+  border: 2px solid;
+}
+
+.pb-hero.pick.radiant {
+  border-color: #2ecc71;
+}
+
+.pb-hero.pick.dire {
+  border-color: #e74c3c;
+}
+
+.pb-hero small {
+  font-size: 9px;
+  color: #8b92a8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  padding: 0 2px;
+  line-height: 14px;
+}
+
+/* 赛事统计 */
+.tournament-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tournament-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #252a3a;
+  border-radius: 8px;
+}
+
+.tournament-selector label {
+  color: #8b92a8;
+  font-size: 14px;
+}
+
+.tournament-selector select {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #3d4450;
+  background: #1a1d29;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.tourney-summary {
+  background: #252a3a;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.tourney-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.tourney-summary p {
+  margin: 0;
+  color: #8b92a8;
+  font-size: 14px;
+}
+
+.tourney-section {
+  background: #252a3a;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.tourney-section h5 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #4c5fe8;
+}
+
+/* 队伍战绩 */
+.team-standings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team-standing {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #1a1d29;
+  border-radius: 6px;
+  align-items: center;
+}
+
+.team-standing .team-name {
+  color: #fff;
+  font-size: 14px;
+}
+
+.team-standing .record {
+  color: #8b92a8;
+  font-size: 13px;
+}
+
+.team-standing .winrate {
+  font-weight: 600;
+  font-size: 14px;
+  text-align: right;
+}
+
+.winrate.high { color: #2ecc71; }
+.winrate.low { color: #e74c3c; }
+
+/* 英雄统计 */
+.hero-standings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.standings-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 8px 12px;
+  color: #8b92a8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hero-standing {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #1a1d29;
+  border-radius: 6px;
+  align-items: center;
+}
+
+.hero-standing .hero-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-standing .hero-info img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}
+
+.hero-standing .hero-info span {
+  color: #fff;
+  font-size: 13px;
+}
+
+.hero-standing .stat {
+  color: #8b92a8;
+  font-size: 13px;
+}
+
+.hero-standing .stat.high { color: #2ecc71; }
+.hero-standing .stat.low { color: #e74c3c; }
+
+/* 英雄数据总览 */
+.hero-stats-pro h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.stats-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stats-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 10px 12px;
+  color: #8b92a8;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #3d4450;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #252a3a;
+  border-radius: 6px;
+  align-items: center;
+}
+
+.stats-row:hover {
+  background: #2d3347;
+}
+
+.hero-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-cell img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+}
+
+.hero-cell span {
+  color: #fff;
+  font-size: 14px;
+}
+
+.stat {
+  font-size: 14px;
+  color: #8b92a8;
+}
+
+.stat.pick { color: #2ecc71; }
+.stat.ban { color: #e74c3c; }
+.stat.winrate { font-weight: 600; }
+.stat.high { color: #2ecc71; }
+.stat.low { color: #e74c3c; }
+
+/* 阵容组合 */
+.combo-stats h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.combo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.combo-card {
+  background: #252a3a;
+  padding: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.combo-heroes {
+  display: flex;
+  gap: 8px;
+}
+
+.combo-heroes img {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+}
+
+.combo-stats-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #8b92a8;
+}
+
+.combo-stats-info .winrate {
+  font-weight: 600;
+}
+
+.empty {
+  color: #8b92a8;
+  text-align: center;
+  padding: 40px;
+}
+
+/* 导入数据样式 */
+.import-section {
+  padding: 16px;
+}
+
+.import-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.import-desc {
+  color: #8b92a8;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.import-format {
+  background: #1a1d29;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.import-format h5 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #4c5fe8;
+}
+
+.import-format pre {
+  margin: 0;
+  font-size: 12px;
+  color: #8b92a8;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.import-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #3d4450;
+  background: #252a3a;
+  color: #fff;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.import-textarea:focus {
+  outline: none;
+  border-color: #4c5fe8;
+}
+
+.import-error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 6px;
+}
+
+.import-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.import-btn, .clear-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.import-btn {
+  background: #4c5fe8;
+  color: #fff;
+}
+
+.import-btn:hover {
+  background: #3d4ed0;
+}
+
+.clear-btn {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.clear-btn:hover {
+  background: #c0392b;
+}
+
+.current-stats {
+  background: #252a3a;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.current-stats h5 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.current-stats p {
+  color: #8b92a8;
+  margin: 0 0 10px 0;
+}
+
+.current-stats ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #8b92a8;
+  font-size: 13px;
+}
+
+.current-stats li {
+  margin-bottom: 4px;
+}
+
+/* 数据管理样式 */
+.manage-section {
+  padding: 16px;
+}
+
+.manage-section h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.manage-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #252a3a;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #4c5fe8;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #8b92a8;
+}
+
+.manage-block {
+  background: #252a3a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.manage-block h5 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.manage-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  background: #3d4450;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.manage-btn:hover {
+  background: #4c5fe8;
+}
+
+.manage-btn.warning {
+  background: #f39c12;
+  color: #000;
+}
+
+.manage-btn.warning:hover {
+  background: #e67e22;
+}
+
+.manage-btn.danger {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.manage-btn.danger:hover {
+  background: #c0392b;
+}
+
+.tournament-delete-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tournament-delete-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #1a1d29;
+  border-radius: 6px;
+}
+
+.tournament-delete-item .tournament-name {
+  flex: 1;
+  color: #fff;
+  font-size: 14px;
+}
+
+.tournament-delete-item .tournament-count {
+  color: #8b92a8;
+  font-size: 13px;
+}
+
+.delete-btn-small {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  background: #e74c3c;
+  color: #fff;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.delete-btn-small:hover {
+  opacity: 1;
+}
+
+.select-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.manage-filter {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #3d4450;
+  background: #1a1d29;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.manage-filter:focus {
+  outline: none;
+  border-color: #4c5fe8;
+}
+
+.matches-select-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #3d4450;
+  border-radius: 6px;
+  padding: 8px;
+  background: #1a1d29;
+}
+
+.match-select-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.match-select-item:hover {
+  background: #252a3a;
+}
+
+.match-select-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.match-select-item .match-info {
+  flex: 1;
+  font-size: 13px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.match-select-item .match-date {
+  font-size: 12px;
+  color: #8b92a8;
+}
+
+.list-note {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #8b92a8;
+  text-align: center;
+}
+
+/* API获取样式 */
+.api-fetch-section {
+  background: #252a3a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.api-fetch-section h5 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #4c5fe8;
+}
+
+.api-actions {
+  margin-bottom: 16px;
+}
+
+.api-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: #3d4450;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.api-btn:hover:not(:disabled) {
+  background: #4c5fe8;
+}
+
+.api-btn.primary {
+  background: #4c5fe8;
+}
+
+.api-btn.primary:hover:not(:disabled) {
+  background: #3d4ed0;
+}
+
+.api-btn.secondary {
+  background: #2ecc71;
+  color: #000;
+}
+
+.api-btn.secondary:hover:not(:disabled) {
+  background: #27ae60;
+}
+
+/* Tier 1 赛事按钮 */
+.tier1-section {
+  background: linear-gradient(135deg, #1a1d29 0%, #252a3a 100%);
+  border: 1px solid #4c5fe8;
+}
+
+.tier1-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tier1-actions .api-btn {
+  flex: 1;
+  min-width: 160px;
+  padding: 12px 20px;
+  font-size: 14px;
+}
+
+.blast-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+  color: #fff;
+  border: none;
+}
+
+.blast-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ee5a5a 0%, #dd4949 100%);
+}
+
+.dreamleague-btn {
+  background: linear-gradient(135deg, #4c5fe8 0%, #3d4ed0 100%);
+  color: #fff;
+  border: none;
+}
+
+.dreamleague-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3d4ed0 0%, #2e3db8 100%);
+}
+
+.all-tier1-btn {
+  background: linear-gradient(135deg, #ffd93d 0%, #f9c846 100%);
+  color: #000;
+  border: none;
+  font-weight: 700;
+}
+
+.all-tier1-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f9c846 0%, #f0bf3d 100%);
+}
+
+.tier1-note {
+  margin: 0;
+  color: #8b92a8;
+}
+
+.api-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.league-fetch {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #3d4450;
+}
+
+.league-input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.league-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #3d4450;
+  background: #1a1d29;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.league-input:focus {
+  outline: none;
+  border-color: #4c5fe8;
+}
+
+.league-hints {
+  color: #8b92a8;
+  font-size: 12px;
+}
+
+.loading-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(76, 95, 232, 0.1);
+  border-radius: 6px;
+  color: #4c5fe8;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3d4450;
+  border-top-color: #4c5fe8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.import-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #8b92a8;
+}
+
+.import-divider::before,
+.import-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #3d4450;
+}
+
+.import-divider span {
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.manual-import-section {
+  background: #252a3a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.manual-import-section h5 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.manual-import-section h6 {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  color: #8b92a8;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .match-teams-with-winner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .vs-divider {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .bp-by-team {
+    grid-template-columns: 1fr;
+  }
+  
+  .pro-tabs {
+    flex-wrap: wrap;
+  }
+}

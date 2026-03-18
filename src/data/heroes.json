@@ -949,7 +949,7 @@
     "id": 66,
     "name": "chen",
     "localizedName": "陈",
-    "primaryAttr": "all",
+    "primaryAttr": "int",
     "attackType": "Ranged",
     "roles": [
       "Support",
