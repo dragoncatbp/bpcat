@@ -91,13 +91,23 @@ export function generateId(): string {
 
 // 转换SteamID到SteamID64
 export function toSteamId64(steamId: string): string | null {
-  // 如果已经是17位数字
-  if (/^\d{17}$/.test(steamId)) {
-    return steamId;
+  const trimmed = steamId.trim();
+  
+  // 如果已经是17位数字 (SteamID64)
+  if (/^\d{17}$/.test(trimmed)) {
+    return trimmed;
+  }
+  
+  // 如果是9位以下数字 (account ID)，转换为 SteamID64
+  // 例如: 310911931 -> 76561198271177659
+  if (/^\d{1,10}$/.test(trimmed)) {
+    const accountId = BigInt(trimmed);
+    const steamId64 = BigInt(76561197960265728) + accountId;
+    return steamId64.toString();
   }
   
   // 转换 STEAM_X:Y:Z 格式
-  const match = steamId.match(/^STEAM_(\d+):(\d+):(\d+)$/);
+  const match = trimmed.match(/^STEAM_(\d+):(\d+):(\d+)$/);
   if (match) {
     const [, , Y, Z] = match;
     const steamId64 = BigInt(76561197960265728) + BigInt(Y) + BigInt(2) * BigInt(Z);
@@ -105,7 +115,7 @@ export function toSteamId64(steamId: string): string | null {
   }
   
   // 转换 [U:1:XXXX] 格式
-  const uMatch = steamId.match(/^\[U:1:(\d+)\]$/);
+  const uMatch = trimmed.match(/^\[U:1:(\d+)\]$/);
   if (uMatch) {
     const accountId = BigInt(uMatch[1]);
     const steamId64 = BigInt(76561197960265728) + accountId;
