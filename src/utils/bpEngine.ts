@@ -123,6 +123,51 @@ export function makeSelection(draft: BPDraft, heroId: number): BPDraft {
   return newDraft;
 }
 
+// 撤回上一步操作
+export function undoLastStep(draft: BPDraft): BPDraft {
+  if (draft.currentStep === 0) return draft;
+  
+  const lastStepIndex = draft.currentStep - 1;
+  const lastStep = draft.steps[lastStepIndex];
+  
+  if (!lastStep || !lastStep.heroId) return draft;
+  
+  const newSteps = [...draft.steps];
+  newSteps[lastStepIndex] = {
+    ...lastStep,
+    heroId: null,
+    timestamp: undefined,
+  };
+  
+  const newDraft: BPDraft = {
+    ...draft,
+    steps: newSteps,
+    currentStep: lastStepIndex,
+  };
+  
+  // 从ban/pick列表中移除
+  if (lastStep.type === 'ban') {
+    if (lastStep.team === 'radiant') {
+      newDraft.radiantBans = draft.radiantBans.filter(id => id !== lastStep.heroId);
+    } else {
+      newDraft.direBans = draft.direBans.filter(id => id !== lastStep.heroId);
+    }
+  } else {
+    if (lastStep.team === 'radiant') {
+      newDraft.radiantPicks = draft.radiantPicks.filter(id => id !== lastStep.heroId);
+    } else {
+      newDraft.direPicks = draft.direPicks.filter(id => id !== lastStep.heroId);
+    }
+  }
+  
+  return newDraft;
+}
+
+// 判断是否可撤回
+export function canUndo(draft: BPDraft): boolean {
+  return draft.currentStep > 0;
+}
+
 // 判断BP是否结束
 export function isDraftComplete(draft: BPDraft): boolean {
   return draft.currentStep >= draft.steps.length;

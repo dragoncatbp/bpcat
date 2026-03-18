@@ -14,6 +14,7 @@ import {
   getPickedHeroes,
   getCurrentStep,
   getCurrentTeamName,
+  undoLastStep,
 } from '@/utils/bpEngine';
 import type { BPDraft } from '@/types';
 import heroesData from '@/data/heroes.json';
@@ -50,6 +51,14 @@ function App() {
   // 重置BP
   const resetDraft = useCallback(() => {
     setDraft(null);
+  }, []);
+
+  // 撤回上一步
+  const handleUndo = useCallback(() => {
+    setDraft(prev => {
+      if (!prev) return null;
+      return undoLastStep(prev);
+    });
   }, []);
 
   // 获取当前不可用的英雄
@@ -230,7 +239,7 @@ function App() {
 
                 {/* 中间：BP面板和英雄选择 */}
                 <div className="draft-main">
-                  <BPPanel draft={draft} />
+                  <BPPanel draft={draft} onUndo={handleUndo} />
                   
                   {!isComplete ? (
                     <div className="selection-area">

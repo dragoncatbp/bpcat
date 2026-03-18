@@ -5,7 +5,8 @@ import {
   getCurrentTeamName, 
   getCurrentActionName,
   getDraftStats,
-  isDraftComplete
+  isDraftComplete,
+  canUndo
 } from '@/utils/bpEngine';
 import heroesData from '@/data/heroes.json';
 
@@ -13,6 +14,7 @@ const heroes: Hero[] = heroesData as Hero[];
 
 interface BPPanelProps {
   draft: BPDraft;
+  onUndo?: () => void;
 }
 
 function HeroSlot({ heroId, size = 'normal' }: { heroId: number | null; size?: 'normal' | 'small' }) {
@@ -34,7 +36,7 @@ function HeroSlot({ heroId, size = 'normal' }: { heroId: number | null; size?: '
   );
 }
 
-export function BPPanel({ draft }: BPPanelProps) {
+export function BPPanel({ draft, onUndo }: BPPanelProps) {
   const currentStep = getCurrentStep(draft);
   const stats = getDraftStats(draft);
   const isComplete = isDraftComplete(draft);
@@ -54,6 +56,11 @@ export function BPPanel({ draft }: BPPanelProps) {
             </>
           ) : (
             <span className="phase-name complete">BP完成</span>
+          )}
+          {canUndo(draft) && onUndo && (
+            <button className="btn-undo" onClick={onUndo} title="撤回上一步">
+              ↩️ 撤回
+            </button>
           )}
         </div>
         <div className="progress-bar">
