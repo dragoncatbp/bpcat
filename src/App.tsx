@@ -9,6 +9,7 @@ import { BPHistory } from '@/components/BPHistory';
 import { SideSelector } from '@/components/SideSelector';
 import { BPEvaluation } from '@/components/BPEvaluation';
 import { OpponentSelector } from '@/components/OpponentSelector';
+import { ProMatches } from '@/components/ProMatches';
 import type { Team } from '@/types/team';
 import type { BPDraft } from '@/types';
 import type { Team as BPTeam } from '@/types';
@@ -30,7 +31,7 @@ import { evaluateDraft, getScoreColor, getScoreLevel } from '@/utils/bpEvaluatio
 import heroesData from '@/data/heroes.json';
 import './App.css';
 
-type AppView = 'bp' | 'teams' | 'history';
+type AppView = 'bp' | 'teams' | 'history' | 'pro';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>('bp');
@@ -119,6 +120,12 @@ function App() {
             🎮 BP模拟器
           </button>
           <button 
+            className={currentView === 'pro' ? 'active' : ''}
+            onClick={() => setCurrentView('pro')}
+          >
+            🏆 职业BP
+          </button>
+          <button 
             className={currentView === 'history' ? 'active' : ''}
             onClick={() => setCurrentView('history')}
           >
@@ -171,6 +178,11 @@ function App() {
                 setCurrentView('bp');
               }}
             />
+          </div>
+        ) : currentView === 'pro' ? (
+          /* 职业BP界面 */
+          <div className="pro-view">
+            <ProMatches />
           </div>
         ) : (
           /* BP界面 */

@@ -837,6 +837,333 @@ body {
   border-left: 3px solid #f59e0b;
 }
 
+/* ===== 职业BP ===== */
+.pro-view {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pro-matches {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.pro-matches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pro-matches-header h3 {
+  margin: 0;
+}
+
+.pro-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pro-tabs button {
+  padding: 0.5rem 1rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.pro-tabs button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.pro-filter {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.pro-filter:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.pro-matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pro-match-card {
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.pro-match-card:hover {
+  border-color: #60a5fa;
+}
+
+.pro-match-card.active {
+  border-color: #3b82f6;
+}
+
+.match-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.tournament {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.date {
+  color: var(--text-secondary);
+}
+
+.tier {
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.tier-1 {
+  background: #f59e0b;
+  color: #000;
+}
+
+.tier-2 {
+  background: #3b82f6;
+  color: white;
+}
+
+.tier-3 {
+  background: #22c55e;
+  color: white;
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.team.radiant {
+  justify-content: flex-start;
+}
+
+.team.dire {
+  justify-content: flex-end;
+}
+
+.team-name {
+  font-weight: 600;
+}
+
+.team-score {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.team.winner .team-score {
+  color: #4ade80;
+}
+
+.vs {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.match-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.match-bp-detail {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.match-bp-detail h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.bp-phase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.bp-team h6 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.85rem;
+}
+
+.bp-heroes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.bp-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bp-hero img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.bp-hero span {
+  font-size: 0.7rem;
+}
+
+.bp-hero small {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+}
+
+/* 英雄数据 */
+.hero-stats-pro {
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.hero-stats-pro h4 {
+  margin: 0 0 1rem 0;
+}
+
+.stats-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stats-header,
+.stats-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.stats-header {
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-cell img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat.winrate.high {
+  color: #4ade80;
+}
+
+.stat.winrate.low {
+  color: #f87171;
+}
+
+/* 组合数据 */
+.combo-stats h4 {
+  margin: 0 0 1rem 0;
+}
+
+.combo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.combo-card {
+  background: var(--bg-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.combo-heroes {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.combo-heroes img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.combo-stats-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.combo-stats-info .winrate.high {
+  color: #4ade80;
+}
+
+.combo-stats-info .winrate.low {
+  color: #f87171;
+}
+
 /* ===== 克制提示 ===== */
 .counter-tips {
   background: var(--bg-card);
