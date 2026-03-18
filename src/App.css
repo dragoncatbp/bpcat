@@ -882,6 +882,15 @@ body {
   font-size: 0.7rem;
 }
 
+.history-hero-name {
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
 /* ===== 选择区域 ===== */
 .selection-area {
   background: var(--bg-card);
@@ -970,14 +979,16 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2px 4px;
-  background: rgba(0, 0, 0, 0.8);
-  font-size: 0.65rem;
+  padding: 2px 2px;
+  background: rgba(0, 0, 0, 0.85);
+  font-size: 0.6rem;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--text-primary);
+  line-height: 1.2;
+  max-width: 100%;
 }
 
 .hero-overlay {

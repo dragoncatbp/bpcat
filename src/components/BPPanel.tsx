@@ -135,7 +135,7 @@ export function BPPanel({ draft }: BPPanelProps) {
                   {step.type === 'ban' ? '禁' : '选'}
                 </span>
                 <span className="team-tag">{step.team === 'radiant' ? '天' : '夜'}</span>
-                {hero && <span className="hero-name">{hero.localizedName}</span>}
+                {hero && <span className="history-hero-name">{hero.localizedName}</span>}
               </div>
             );
           })}
