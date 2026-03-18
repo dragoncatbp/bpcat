@@ -143,12 +143,15 @@ export async function getRecentMatches(steamId64: string): Promise<PlayerRecentM
 }
 
 // 天梯段位名称
+// rank_tier: 11-15=先锋, 16-20=卫士, 21-25=中军, 26-30=统帅, 31-35=传奇, 36-40=万古, 41-45=超凡, 46-50=冠绝
 export function getRankName(rankTier?: number): string {
   if (!rankTier) return '未校准';
   
   const medals = ['先锋', '卫士', '中军', '统帅', '传奇', '万古流芳', '超凡入圣', '冠绝一世'];
-  const medalIndex = Math.floor((rankTier - 11) / 10);
-  const star = ((rankTier - 11) % 10) + 1;
+  
+  // 每个大段位有5个星级，所以除以5
+  const medalIndex = Math.floor((rankTier - 11) / 5);
+  const star = ((rankTier - 11) % 5) + 1;
   
   if (medalIndex >= 0 && medalIndex < medals.length) {
     return `${medals[medalIndex]} ${star}`;
