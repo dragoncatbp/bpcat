@@ -157,7 +157,12 @@ export function getRankName(rankTier?: number): string {
   const star = ((clampedRank - 11) % 5) + 1;
   
   if (medalIndex >= 0 && medalIndex < medals.length) {
-    return `${medals[medalIndex]} ${star}`;
+    const medalName = medals[medalIndex];
+    // 冠绝一世不显示星级
+    if (medalName === '冠绝一世') {
+      return medalName;
+    }
+    return `${medalName} ${star}`;
   }
   return '未知';
 }
