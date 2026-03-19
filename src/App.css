@@ -1904,6 +1904,40 @@ body {
   max-width: 100%;
 }
 
+/* T1/T2 胜率标记 */
+.hero-tier-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  font-weight: bold;
+  color: #000;
+  z-index: 5;
+}
+
+.hero-tier-badge.t1 {
+  background: #fbbf24; /* 黄色 */
+  box-shadow: 0 0 4px rgba(251, 191, 36, 0.6);
+}
+
+.hero-tier-badge.t2 {
+  background: #4ade80; /* 绿色 */
+  box-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+}
+
+/* T1/T2 英雄卡片边框高亮 */
+.hero-item.t1 {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3);
+}
+
+.hero-item.t2 {
+  border-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
