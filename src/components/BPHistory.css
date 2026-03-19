@@ -484,3 +484,113 @@
     margin-bottom: 0.25rem;
   }
 }
+
+
+/* ===== 手机端适配 (< 480px) ===== */
+@media (max-width: 480px) {
+  .bp-history-panel {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+  
+  .bp-history-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  
+  .bp-history-header h3 {
+    font-size: 1rem;
+  }
+  
+  .bp-history-actions {
+    width: 100%;
+  }
+  
+  .bp-history-actions button {
+    flex: 1;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  /* 列表项 */
+  .bp-history-item {
+    padding: 0.75rem;
+  }
+  
+  .bp-history-info {
+    width: 100%;
+  }
+  
+  .bp-history-title {
+    font-size: 0.9rem;
+  }
+  
+  .bp-history-meta {
+    font-size: 0.75rem;
+  }
+  
+  /* 筛选器 */
+  .bp-history-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .bp-history-filter input,
+  .bp-history-filter select {
+    width: 100%;
+  }
+  
+  /* 详情页 */
+  .bp-detail-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .bp-detail-header h2 {
+    font-size: 1.1rem;
+  }
+  
+  .bp-detail-actions {
+    width: 100%;
+  }
+  
+  /* 队伍展示 */
+  .bp-detail-team h3 {
+    font-size: 1rem;
+  }
+  
+  .bp-hero-list {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.3rem;
+  }
+  
+  .bp-hero-item img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* 评价卡片 */
+  .eval-card {
+    padding: 0.75rem;
+  }
+  
+  .eval-score {
+    font-size: 1.5rem;
+  }
+  
+  /* 统计 */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    padding: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.1rem;
+  }
+}

@@ -2193,3 +2193,161 @@ body {
     font-size: 2rem;
   }
 }
+
+
+/* ===== 手机端适配 (< 480px) ===== */
+@media (max-width: 480px) {
+  /* 头部简化 */
+  .app-header {
+    padding: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.8rem;
+  }
+  
+  /* 导航改为横向滚动 */
+  .main-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .main-nav button {
+    flex-shrink: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  
+  /* 主内容区域 */
+  .app-main {
+    padding: 0.75rem;
+  }
+  
+  /* 英雄网格更小 */
+  .heroes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.4rem;
+  }
+  
+  .hero-card {
+    padding: 0.3rem;
+  }
+  
+  .hero-card img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .hero-name {
+    font-size: 0.65rem;
+  }
+  
+  /* BP面板调整 */
+  .bp-panel {
+    padding: 0.75rem;
+  }
+  
+  .draft-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .bp-sequence {
+    gap: 0.3rem;
+  }
+  
+  .bp-step {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+  
+  /* 筛选栏简化 */
+  .filter-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-bar input,
+  .filter-bar select {
+    width: 100%;
+  }
+  
+  /* 队伍卡片 */
+  .team-card {
+    padding: 0.75rem;
+  }
+  
+  .team-card h4 {
+    font-size: 1rem;
+  }
+  
+  /* 底部操作栏固定 */
+  .action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    z-index: 100;
+  }
+  
+  .app-main {
+    padding-bottom: 80px; /* 给底部操作栏留空间 */
+  }
+  
+  /* 提示面板 */
+  .tips-panel {
+    font-size: 0.85rem;
+  }
+  
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* 模态框全屏 */
+  .modal-content {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+}
+
+/* ===== 小屏手机 (< 360px) ===== */
+@media (max-width: 360px) {
+  .heroes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    gap: 0.3rem;
+  }
+  
+  .hero-card img {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .hero-name {
+    font-size: 0.6rem;
+  }
+  
+  .main-nav button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}
