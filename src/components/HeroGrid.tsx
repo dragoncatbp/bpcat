@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import type { Hero } from '@/types';
 import heroesData from '@/data/heroes.json';
 import { searchHeroes } from '@/data/heroAliases';
+import { fetchHeroWinRates } from '@/data/heroWinrates';
 
 interface HeroGridProps {
   bannedHeroes: number[];
@@ -11,51 +12,6 @@ interface HeroGridProps {
 }
 
 const heroes: Hero[] = heroesData as Hero[];
-
-// 英雄胜率等级
-interface HeroWinRate {
-  heroId: number;
-  winRate: number;
-  matches: number;
-}
-
-// 获取英雄胜率数据（从 localStorage 或 OpenDota）
-async function fetchHeroWinRates(): Promise<HeroWinRate[]> {
-  // 先检查缓存
-  const cached = localStorage.getItem('hero_winrates');
-  const cacheTime = localStorage.getItem('hero_winrates_time');
-  
-  // 缓存24小时内有效
-  if (cached && cacheTime && Date.now() - Number(cacheTime) < 24 * 60 * 60 * 1000) {
-    console.log('Using cached winrates:', JSON.parse(cached).length, 'heroes');
-    return JSON.parse(cached);
-  }
-  
-  try {
-    // 从 OpenDota 获取英雄统计数据（全分段）
-    const response = await fetch('https://api.opendota.com/api/heroStats');
-    const heroStats = await response.json();
-    
-    console.log('Fetched hero stats:', heroStats.length);
-    
-    const winRates: HeroWinRate[] = heroStats.map((h: any) => ({
-      heroId: Number(h.hero_id),
-      winRate: (h.win / h.games) * 100,
-      matches: h.games
-    })).filter((h: HeroWinRate) => h.matches > 1000 && h.winRate > 0);
-    
-    console.log('Processed winrates:', winRates.length, winRates.slice(0, 3));
-    
-    // 缓存到 localStorage
-    localStorage.setItem('hero_winrates', JSON.stringify(winRates));
-    localStorage.setItem('hero_winrates_time', String(Date.now()));
-    
-    return winRates;
-  } catch (error) {
-    console.error('Failed to fetch hero winrates:', error);
-    return [];
-  }
-}
 
 // 获取胜率等级
 function getWinRateTier(winRate: number): 't1' | 't2' | null {
@@ -71,16 +27,9 @@ export function HeroGrid({ bannedHeroes, pickedHeroes, onSelect, disabled }: Her
   
   // 获取英雄胜率数据
   useEffect(() => {
-    console.log('Fetching winrates...');
     fetchHeroWinRates().then(rates => {
-      console.log('Got winrates:', rates.length);
       const map = new Map<number, number>();
-      rates.forEach(r => {
-        map.set(r.heroId, r.winRate);
-        if (r.winRate >= 52) {
-          console.log('High winrate hero:', r.heroId, r.winRate.toFixed(1) + '%');
-        }
-      });
+      rates.forEach(r => map.set(r.heroId, r.winRate));
       setHeroWinRates(map);
     });
   }, []);
