@@ -31,15 +31,15 @@ async function fetchHeroWinRates(): Promise<HeroWinRate[]> {
   }
   
   try {
-    // 从 OpenDota 获取英雄胜率数据
-    const response = await fetch('https://api.opendota.com/api/heroes');
+    // 从 OpenDota 获取英雄统计数据（全分段）
+    const response = await fetch('https://api.opendota.com/api/heroStats');
     const heroes = await response.json();
     
     const winRates: HeroWinRate[] = heroes.map((h: any) => ({
       heroId: h.id,
-      winRate: h.pro_win / h.pro_pick * 100,
-      matches: h.pro_pick
-    })).filter((h: HeroWinRate) => h.matches > 0);
+      winRate: (h.win / h.games) * 100,
+      matches: h.games
+    })).filter((h: HeroWinRate) => h.matches > 1000); // 至少1000场数据才可信
     
     // 缓存到 localStorage
     localStorage.setItem('hero_winrates', JSON.stringify(winRates));
