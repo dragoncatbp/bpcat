@@ -27,19 +27,24 @@ async function fetchHeroWinRates(): Promise<HeroWinRate[]> {
   
   // 缓存24小时内有效
   if (cached && cacheTime && Date.now() - Number(cacheTime) < 24 * 60 * 60 * 1000) {
+    console.log('Using cached winrates:', JSON.parse(cached).length, 'heroes');
     return JSON.parse(cached);
   }
   
   try {
     // 从 OpenDota 获取英雄统计数据（全分段）
     const response = await fetch('https://api.opendota.com/api/heroStats');
-    const heroes = await response.json();
+    const heroStats = await response.json();
     
-    const winRates: HeroWinRate[] = heroes.map((h: any) => ({
-      heroId: h.id,
+    console.log('Fetched hero stats:', heroStats.length);
+    
+    const winRates: HeroWinRate[] = heroStats.map((h: any) => ({
+      heroId: Number(h.hero_id),
       winRate: (h.win / h.games) * 100,
       matches: h.games
-    })).filter((h: HeroWinRate) => h.matches > 1000); // 至少1000场数据才可信
+    })).filter((h: HeroWinRate) => h.matches > 1000 && h.winRate > 0);
+    
+    console.log('Processed winrates:', winRates.length, winRates.slice(0, 3));
     
     // 缓存到 localStorage
     localStorage.setItem('hero_winrates', JSON.stringify(winRates));
@@ -66,9 +71,16 @@ export function HeroGrid({ bannedHeroes, pickedHeroes, onSelect, disabled }: Her
   
   // 获取英雄胜率数据
   useEffect(() => {
+    console.log('Fetching winrates...');
     fetchHeroWinRates().then(rates => {
+      console.log('Got winrates:', rates.length);
       const map = new Map<number, number>();
-      rates.forEach(r => map.set(r.heroId, r.winRate));
+      rates.forEach(r => {
+        map.set(r.heroId, r.winRate);
+        if (r.winRate >= 52) {
+          console.log('High winrate hero:', r.heroId, r.winRate.toFixed(1) + '%');
+        }
+      });
       setHeroWinRates(map);
     });
   }, []);
