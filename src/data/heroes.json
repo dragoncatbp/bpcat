@@ -10,7 +10,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/antimage.png",
+    "image": "heroes/antimage.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/antimage.png"
   },
   {
@@ -25,7 +25,7 @@
       "Disabler",
       "Carry"
     ],
-    "image": "/bpcat/heroes/axe.png",
+    "image": "heroes/axe.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/axe.png"
   },
   {
@@ -40,7 +40,7 @@
       "Nuker",
       "Durable"
     ],
-    "image": "/bpcat/heroes/bane.png",
+    "image": "heroes/bane.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/bane.png"
   },
   {
@@ -55,7 +55,7 @@
       "Nuker",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/bloodseeker.png",
+    "image": "heroes/bloodseeker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/bloodseeker.png"
   },
   {
@@ -69,7 +69,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/crystal_maiden.png",
+    "image": "heroes/crystal_maiden.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/crystal_maiden.png"
   },
   {
@@ -83,7 +83,7 @@
       "Disabler",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/drow_ranger.png",
+    "image": "heroes/drow_ranger.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/drow_ranger.png"
   },
   {
@@ -98,7 +98,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/earthshaker.png",
+    "image": "heroes/earthshaker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/earthshaker.png"
   },
   {
@@ -112,7 +112,7 @@
       "Pusher",
       "Escape"
     ],
-    "image": "/bpcat/heroes/juggernaut.png",
+    "image": "heroes/juggernaut.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/juggernaut.png"
   },
   {
@@ -128,7 +128,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/mirana.png",
+    "image": "heroes/mirana.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/mirana.png"
   },
   {
@@ -144,7 +144,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/morphling.png",
+    "image": "heroes/morphling.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/morphling.png"
   },
   {
@@ -157,7 +157,7 @@
       "Carry",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/nevermore.png",
+    "image": "heroes/nevermore.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/nevermore.png"
   },
   {
@@ -172,7 +172,7 @@
       "Pusher",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/phantom_lancer.png",
+    "image": "heroes/phantom_lancer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/phantom_lancer.png"
   },
   {
@@ -187,7 +187,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/puck.png",
+    "image": "heroes/puck.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/puck.png"
   },
   {
@@ -202,7 +202,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/pudge.png",
+    "image": "heroes/pudge.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/pudge.png"
   },
   {
@@ -217,7 +217,7 @@
       "Nuker",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/razor.png",
+    "image": "heroes/razor.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/razor.png"
   },
   {
@@ -233,7 +233,7 @@
       "Nuker",
       "Escape"
     ],
-    "image": "/bpcat/heroes/sand_king.png",
+    "image": "heroes/sand_king.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/sand_king.png"
   },
   {
@@ -249,7 +249,7 @@
       "Initiator",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/storm_spirit.png",
+    "image": "heroes/storm_spirit.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/storm_spirit.png"
   },
   {
@@ -265,7 +265,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/sven.png",
+    "image": "heroes/sven.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/sven.png"
   },
   {
@@ -282,7 +282,7 @@
       "Durable",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/tiny.png",
+    "image": "heroes/tiny.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/tiny.png"
   },
   {
@@ -298,7 +298,7 @@
       "Nuker",
       "Escape"
     ],
-    "image": "/bpcat/heroes/vengefulspirit.png",
+    "image": "heroes/vengefulspirit.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/vengefulspirit.png"
   },
   {
@@ -314,7 +314,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/windrunner.png",
+    "image": "heroes/windrunner.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/windrunner.png"
   },
   {
@@ -327,7 +327,7 @@
       "Nuker",
       "Carry"
     ],
-    "image": "/bpcat/heroes/zuus.png",
+    "image": "heroes/zuus.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/zuus.png"
   },
   {
@@ -344,7 +344,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/kunkka.png",
+    "image": "heroes/kunkka.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/kunkka.png"
   },
   {
@@ -359,7 +359,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/lina.png",
+    "image": "heroes/lina.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/lina.png"
   },
   {
@@ -374,7 +374,7 @@
       "Nuker",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/lion.png",
+    "image": "heroes/lion.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/lion.png"
   },
   {
@@ -390,7 +390,7 @@
       "Nuker",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/shadow_shaman.png",
+    "image": "heroes/shadow_shaman.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/shadow_shaman.png"
   },
   {
@@ -406,7 +406,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/slardar.png",
+    "image": "heroes/slardar.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/slardar.png"
   },
   {
@@ -422,7 +422,7 @@
       "Nuker",
       "Carry"
     ],
-    "image": "/bpcat/heroes/tidehunter.png",
+    "image": "heroes/tidehunter.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/tidehunter.png"
   },
   {
@@ -436,7 +436,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/witch_doctor.png",
+    "image": "heroes/witch_doctor.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/witch_doctor.png"
   },
   {
@@ -449,7 +449,7 @@
       "Support",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/lich.png",
+    "image": "heroes/lich.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/lich.png"
   },
   {
@@ -463,7 +463,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/riki.png",
+    "image": "heroes/riki.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/riki.png"
   },
   {
@@ -477,7 +477,7 @@
       "Initiator",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/enigma.png",
+    "image": "heroes/enigma.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/enigma.png"
   },
   {
@@ -491,7 +491,7 @@
       "Nuker",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/tinker.png",
+    "image": "heroes/tinker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/tinker.png"
   },
   {
@@ -504,7 +504,7 @@
       "Carry",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/sniper.png",
+    "image": "heroes/sniper.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/sniper.png"
   },
   {
@@ -519,7 +519,7 @@
       "Durable",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/necrolyte.png",
+    "image": "heroes/necrolyte.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/necrolyte.png"
   },
   {
@@ -533,7 +533,7 @@
       "Initiator",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/warlock.png",
+    "image": "heroes/warlock.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/warlock.png"
   },
   {
@@ -548,7 +548,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/beastmaster.png",
+    "image": "heroes/beastmaster.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/beastmaster.png"
   },
   {
@@ -562,7 +562,7 @@
       "Nuker",
       "Escape"
     ],
-    "image": "/bpcat/heroes/queenofpain.png",
+    "image": "heroes/queenofpain.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/queenofpain.png"
   },
   {
@@ -578,7 +578,7 @@
       "Pusher",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/venomancer.png",
+    "image": "heroes/venomancer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/venomancer.png"
   },
   {
@@ -594,7 +594,7 @@
       "Escape",
       "Durable"
     ],
-    "image": "/bpcat/heroes/faceless_void.png",
+    "image": "heroes/faceless_void.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/faceless_void.png"
   },
   {
@@ -610,7 +610,7 @@
       "Disabler",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/skeleton_king.png",
+    "image": "heroes/skeleton_king.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/skeleton_king.png"
   },
   {
@@ -625,7 +625,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/death_prophet.png",
+    "image": "heroes/death_prophet.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/death_prophet.png"
   },
   {
@@ -638,7 +638,7 @@
       "Carry",
       "Escape"
     ],
-    "image": "/bpcat/heroes/phantom_assassin.png",
+    "image": "heroes/phantom_assassin.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/phantom_assassin.png"
   },
   {
@@ -651,7 +651,7 @@
       "Nuker",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/pugna.png",
+    "image": "heroes/pugna.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/pugna.png"
   },
   {
@@ -664,7 +664,7 @@
       "Carry",
       "Escape"
     ],
-    "image": "/bpcat/heroes/templar_assassin.png",
+    "image": "heroes/templar_assassin.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/templar_assassin.png"
   },
   {
@@ -679,7 +679,7 @@
       "Initiator",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/viper.png",
+    "image": "heroes/viper.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/viper.png"
   },
   {
@@ -693,7 +693,7 @@
       "Nuker",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/luna.png",
+    "image": "heroes/luna.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/luna.png"
   },
   {
@@ -710,7 +710,7 @@
       "Initiator",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/dragon_knight.png",
+    "image": "heroes/dragon_knight.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/dragon_knight.png"
   },
   {
@@ -724,7 +724,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/dazzle.png",
+    "image": "heroes/dazzle.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/dazzle.png"
   },
   {
@@ -739,7 +739,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/rattletrap.png",
+    "image": "heroes/rattletrap.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/rattletrap.png"
   },
   {
@@ -755,7 +755,7 @@
       "Pusher",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/leshrac.png",
+    "image": "heroes/leshrac.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/leshrac.png"
   },
   {
@@ -770,7 +770,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/furion.png",
+    "image": "heroes/furion.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/furion.png"
   },
   {
@@ -785,7 +785,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/life_stealer.png",
+    "image": "heroes/life_stealer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/life_stealer.png"
   },
   {
@@ -799,7 +799,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/dark_seer.png",
+    "image": "heroes/dark_seer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/dark_seer.png"
   },
   {
@@ -813,7 +813,7 @@
       "Escape",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/clinkz.png",
+    "image": "heroes/clinkz.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/clinkz.png"
   },
   {
@@ -827,7 +827,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/omniknight.png",
+    "image": "heroes/omniknight.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/omniknight.png"
   },
   {
@@ -842,7 +842,7 @@
       "Durable",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/enchantress.png",
+    "image": "heroes/enchantress.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/enchantress.png"
   },
   {
@@ -856,7 +856,7 @@
       "Durable",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/huskar.png",
+    "image": "heroes/huskar.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/huskar.png"
   },
   {
@@ -872,7 +872,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/night_stalker.png",
+    "image": "heroes/night_stalker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/night_stalker.png"
   },
   {
@@ -887,7 +887,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/broodmother.png",
+    "image": "heroes/broodmother.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/broodmother.png"
   },
   {
@@ -900,7 +900,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/bounty_hunter.png",
+    "image": "heroes/bounty_hunter.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/bounty_hunter.png"
   },
   {
@@ -913,7 +913,7 @@
       "Carry",
       "Escape"
     ],
-    "image": "/bpcat/heroes/weaver.png",
+    "image": "heroes/weaver.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/weaver.png"
   },
   {
@@ -928,7 +928,7 @@
       "Pusher",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/jakiro.png",
+    "image": "heroes/jakiro.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/jakiro.png"
   },
   {
@@ -942,7 +942,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/batrider.png",
+    "image": "heroes/batrider.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/batrider.png"
   },
   {
@@ -955,7 +955,7 @@
       "Support",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/chen.png",
+    "image": "heroes/chen.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/chen.png"
   },
   {
@@ -969,7 +969,7 @@
       "Durable",
       "Escape"
     ],
-    "image": "/bpcat/heroes/spectre.png",
+    "image": "heroes/spectre.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/spectre.png"
   },
   {
@@ -983,7 +983,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/ancient_apparition.png",
+    "image": "heroes/ancient_apparition.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/ancient_apparition.png"
   },
   {
@@ -999,7 +999,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/doom_bringer.png",
+    "image": "heroes/doom_bringer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/doom_bringer.png"
   },
   {
@@ -1013,7 +1013,7 @@
       "Durable",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/ursa.png",
+    "image": "heroes/ursa.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/ursa.png"
   },
   {
@@ -1029,7 +1029,7 @@
       "Durable",
       "Escape"
     ],
-    "image": "/bpcat/heroes/spirit_breaker.png",
+    "image": "heroes/spirit_breaker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/spirit_breaker.png"
   },
   {
@@ -1043,7 +1043,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/gyrocopter.png",
+    "image": "heroes/gyrocopter.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/gyrocopter.png"
   },
   {
@@ -1060,7 +1060,7 @@
       "Initiator",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/alchemist.png",
+    "image": "heroes/alchemist.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/alchemist.png"
   },
   {
@@ -1076,7 +1076,7 @@
       "Escape",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/invoker.png",
+    "image": "heroes/invoker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/invoker.png"
   },
   {
@@ -1092,7 +1092,7 @@
       "Initiator",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/silencer.png",
+    "image": "heroes/silencer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/silencer.png"
   },
   {
@@ -1106,7 +1106,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/obsidian_destroyer.png",
+    "image": "heroes/obsidian_destroyer.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/obsidian_destroyer.png"
   },
   {
@@ -1121,7 +1121,7 @@
       "Durable",
       "Escape"
     ],
-    "image": "/bpcat/heroes/lycan.png",
+    "image": "heroes/lycan.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/lycan.png"
   },
   {
@@ -1137,7 +1137,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/brewmaster.png",
+    "image": "heroes/brewmaster.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/brewmaster.png"
   },
   {
@@ -1152,7 +1152,7 @@
       "Initiator",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/shadow_demon.png",
+    "image": "heroes/shadow_demon.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/shadow_demon.png"
   },
   {
@@ -1166,7 +1166,7 @@
       "Pusher",
       "Durable"
     ],
-    "image": "/bpcat/heroes/lone_druid.png",
+    "image": "heroes/lone_druid.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/lone_druid.png"
   },
   {
@@ -1182,7 +1182,7 @@
       "Pusher",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/chaos_knight.png",
+    "image": "heroes/chaos_knight.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/chaos_knight.png"
   },
   {
@@ -1199,7 +1199,7 @@
       "Initiator",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/meepo.png",
+    "image": "heroes/meepo.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/meepo.png"
   },
   {
@@ -1215,7 +1215,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/treant.png",
+    "image": "heroes/treant.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/treant.png"
   },
   {
@@ -1231,7 +1231,7 @@
       "Durable",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/ogre_magi.png",
+    "image": "heroes/ogre_magi.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/ogre_magi.png"
   },
   {
@@ -1246,7 +1246,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/undying.png",
+    "image": "heroes/undying.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/undying.png"
   },
   {
@@ -1260,7 +1260,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/rubick.png",
+    "image": "heroes/rubick.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/rubick.png"
   },
   {
@@ -1275,7 +1275,7 @@
       "Nuker",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/disruptor.png",
+    "image": "heroes/disruptor.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/disruptor.png"
   },
   {
@@ -1290,7 +1290,7 @@
       "Initiator",
       "Escape"
     ],
-    "image": "/bpcat/heroes/nyx_assassin.png",
+    "image": "heroes/nyx_assassin.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/nyx_assassin.png"
   },
   {
@@ -1307,7 +1307,7 @@
       "Initiator",
       "Escape"
     ],
-    "image": "/bpcat/heroes/naga_siren.png",
+    "image": "heroes/naga_siren.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/naga_siren.png"
   },
   {
@@ -1321,7 +1321,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/keeper_of_the_light.png",
+    "image": "heroes/keeper_of_the_light.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/keeper_of_the_light.png"
   },
   {
@@ -1335,7 +1335,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/wisp.png",
+    "image": "heroes/wisp.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/wisp.png"
   },
   {
@@ -1351,7 +1351,7 @@
       "Disabler",
       "Pusher"
     ],
-    "image": "/bpcat/heroes/visage.png",
+    "image": "heroes/visage.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/visage.png"
   },
   {
@@ -1366,7 +1366,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/slark.png",
+    "image": "heroes/slark.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/slark.png"
   },
   {
@@ -1380,7 +1380,7 @@
       "Disabler",
       "Durable"
     ],
-    "image": "/bpcat/heroes/medusa.png",
+    "image": "heroes/medusa.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/medusa.png"
   },
   {
@@ -1395,7 +1395,7 @@
       "Disabler",
       "Durable"
     ],
-    "image": "/bpcat/heroes/troll_warlord.png",
+    "image": "heroes/troll_warlord.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/troll_warlord.png"
   },
   {
@@ -1411,7 +1411,7 @@
       "Nuker",
       "Escape"
     ],
-    "image": "/bpcat/heroes/centaur.png",
+    "image": "heroes/centaur.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/centaur.png"
   },
   {
@@ -1426,7 +1426,7 @@
       "Nuker",
       "Escape"
     ],
-    "image": "/bpcat/heroes/magnataur.png",
+    "image": "heroes/magnataur.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/magnataur.png"
   },
   {
@@ -1440,7 +1440,7 @@
       "Durable",
       "Escape"
     ],
-    "image": "/bpcat/heroes/shredder.png",
+    "image": "heroes/shredder.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/shredder.png"
   },
   {
@@ -1455,7 +1455,7 @@
       "Initiator",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/bristleback.png",
+    "image": "heroes/bristleback.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/bristleback.png"
   },
   {
@@ -1469,7 +1469,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/tusk.png",
+    "image": "heroes/tusk.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/tusk.png"
   },
   {
@@ -1483,7 +1483,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/skywrath_mage.png",
+    "image": "heroes/skywrath_mage.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/skywrath_mage.png"
   },
   {
@@ -1497,7 +1497,7 @@
       "Carry",
       "Durable"
     ],
-    "image": "/bpcat/heroes/abaddon.png",
+    "image": "heroes/abaddon.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/abaddon.png"
   },
   {
@@ -1512,7 +1512,7 @@
       "Nuker",
       "Durable"
     ],
-    "image": "/bpcat/heroes/elder_titan.png",
+    "image": "heroes/elder_titan.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/elder_titan.png"
   },
   {
@@ -1528,7 +1528,7 @@
       "Durable",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/legion_commander.png",
+    "image": "heroes/legion_commander.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/legion_commander.png"
   },
   {
@@ -1541,7 +1541,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/techies.png",
+    "image": "heroes/techies.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/techies.png"
   },
   {
@@ -1557,7 +1557,7 @@
       "Disabler",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/ember_spirit.png",
+    "image": "heroes/ember_spirit.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/ember_spirit.png"
   },
   {
@@ -1573,7 +1573,7 @@
       "Initiator",
       "Durable"
     ],
-    "image": "/bpcat/heroes/earth_spirit.png",
+    "image": "heroes/earth_spirit.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/earth_spirit.png"
   },
   {
@@ -1589,7 +1589,7 @@
       "Durable",
       "Escape"
     ],
-    "image": "/bpcat/heroes/abyssal_underlord.png",
+    "image": "heroes/abyssal_underlord.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/abyssal_underlord.png"
   },
   {
@@ -1603,7 +1603,7 @@
       "Pusher",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/terrorblade.png",
+    "image": "heroes/terrorblade.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/terrorblade.png"
   },
   {
@@ -1619,7 +1619,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/phoenix.png",
+    "image": "heroes/phoenix.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/phoenix.png"
   },
   {
@@ -1634,7 +1634,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/oracle.png",
+    "image": "heroes/oracle.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/oracle.png"
   },
   {
@@ -1648,7 +1648,7 @@
       "Disabler",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/winter_wyvern.png",
+    "image": "heroes/winter_wyvern.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/winter_wyvern.png"
   },
   {
@@ -1662,7 +1662,7 @@
       "Escape",
       "Nuker"
     ],
-    "image": "/bpcat/heroes/arc_warden.png",
+    "image": "heroes/arc_warden.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/arc_warden.png"
   },
   {
@@ -1677,7 +1677,7 @@
       "Disabler",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/monkey_king.png",
+    "image": "heroes/monkey_king.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/monkey_king.png"
   },
   {
@@ -1692,7 +1692,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/dark_willow.png",
+    "image": "heroes/dark_willow.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/dark_willow.png"
   },
   {
@@ -1709,7 +1709,7 @@
       "Escape",
       "Initiator"
     ],
-    "image": "/bpcat/heroes/pangolier.png",
+    "image": "heroes/pangolier.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/pangolier.png"
   },
   {
@@ -1724,7 +1724,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/grimstroke.png",
+    "image": "heroes/grimstroke.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/grimstroke.png"
   },
   {
@@ -1739,7 +1739,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/hoodwink.png",
+    "image": "heroes/hoodwink.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/hoodwink.png"
   },
   {
@@ -1754,7 +1754,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/void_spirit.png",
+    "image": "heroes/void_spirit.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/void_spirit.png"
   },
   {
@@ -1769,7 +1769,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/snapfire.png",
+    "image": "heroes/snapfire.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/snapfire.png"
   },
   {
@@ -1784,7 +1784,7 @@
       "Disabler",
       "Durable"
     ],
-    "image": "/bpcat/heroes/mars.png",
+    "image": "heroes/mars.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/mars.png"
   },
   {
@@ -1799,7 +1799,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/ringmaster.png",
+    "image": "heroes/ringmaster.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/ringmaster.png"
   },
   {
@@ -1812,7 +1812,7 @@
       "Carry",
       "Durable"
     ],
-    "image": "/bpcat/heroes/dawnbreaker.png",
+    "image": "heroes/dawnbreaker.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/dawnbreaker.png"
   },
   {
@@ -1828,7 +1828,7 @@
       "Disabler",
       "Escape"
     ],
-    "image": "/bpcat/heroes/marci.png",
+    "image": "heroes/marci.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/marci.png"
   },
   {
@@ -1842,7 +1842,7 @@
       "Durable",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/primal_beast.png",
+    "image": "heroes/primal_beast.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/primal_beast.png"
   },
   {
@@ -1856,7 +1856,7 @@
       "Nuker",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/muerta.png",
+    "image": "heroes/muerta.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/muerta.png"
   },
   {
@@ -1870,7 +1870,7 @@
       "Escape",
       "Disabler"
     ],
-    "image": "/bpcat/heroes/kez.png",
+    "image": "heroes/kez.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/kez.png"
   },
   {
@@ -1884,7 +1884,7 @@
       "Disabler",
       "Durable"
     ],
-    "image": "/bpcat/heroes/largo.png",
+    "image": "heroes/largo.png",
     "icon": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_reactheroes/icons/largo.png"
   }
 ]
