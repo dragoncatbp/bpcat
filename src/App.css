@@ -1904,38 +1904,73 @@ body {
   max-width: 100%;
 }
 
-/* T1/T2 胜率标记 */
-.hero-tier-badge {
+/* 队伍擅长英雄标记 */
+.hero-team-badge {
   position: absolute;
   top: 2px;
   right: 2px;
-  padding: 1px 4px;
-  border-radius: 3px;
-  font-size: 0.55rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 0.6rem;
   font-weight: bold;
   color: #000;
   z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-tier-badge.t1 {
-  background: #fbbf24; /* 黄色 */
-  box-shadow: 0 0 4px rgba(251, 191, 36, 0.6);
+.hero-team-badge.my {
+  background: #fbbf24; /* 黄色 - 己方 */
+  box-shadow: 0 0 4px rgba(251, 191, 36, 0.8);
 }
 
-.hero-tier-badge.t2 {
-  background: #4ade80; /* 绿色 */
-  box-shadow: 0 0 4px rgba(74, 222, 128, 0.6);
+.hero-team-badge.opponent {
+  background: #4ade80; /* 绿色 - 敌方 */
+  box-shadow: 0 0 4px rgba(74, 222, 128, 0.8);
 }
 
-/* T1/T2 英雄卡片边框高亮 */
-.hero-item.t1 {
+/* 队伍擅长英雄卡片边框高亮 */
+.hero-item.my {
   border-color: #fbbf24;
-  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.4);
 }
 
-.hero-item.t2 {
+.hero-item.opponent {
   border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.4);
+}
+
+/* 图例说明 */
+.hero-legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-item.my .legend-dot {
+  background: #fbbf24;
+}
+
+.legend-item.opponent .legend-dot {
+  background: #4ade80;
 }
 
 .hero-overlay {

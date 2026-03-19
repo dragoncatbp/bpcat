@@ -365,6 +365,8 @@ function App() {
                         bannedHeroes={bannedHeroes}
                         pickedHeroes={pickedHeroes}
                         onSelect={handleSelectHero}
+                        myTeam={mainTeam}
+                        opponentTeam={opponentTeam}
                       />
                     </div>
                   ) : (
