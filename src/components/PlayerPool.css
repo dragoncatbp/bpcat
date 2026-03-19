@@ -52,6 +52,51 @@
   font-size: 0.8rem;
 }
 
+/* 排序栏 */
+.player-sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.sort-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sort-select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  min-width: 120px;
+}
+
+.sort-order-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sort-order-btn:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
 /* 表格容器 */
 .players-table-container {
   background: var(--bg-card);
@@ -87,6 +132,31 @@
 
 .players-table.v2 tr:last-child td {
   border-bottom: none;
+}
+
+/* 可排序表头 */
+.players-table.v2 th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.players-table.v2 th.sortable:hover {
+  background: var(--bg-card);
+}
+
+.sort-arrow {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.sort-arrow.active {
+  color: var(--primary);
+  opacity: 1;
+  font-weight: bold;
 }
 
 /* 列宽设置 - 调整以适应单页显示 */

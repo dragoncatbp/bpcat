@@ -33,6 +33,40 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
   const [positionFilter, setPositionFilter] = useState<Position | 'all'>('all');
   const [showForm, setShowForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  
+  // 排序状态 - maxRating 按最高分排序，team 按队伍+位置排序
+  const [sortBy, setSortBy] = useState<'name' | 'position' | 'maxRating' | 'team'>('name');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  
+  // 处理表头点击排序
+  const handleSort = (field: typeof sortBy) => {
+    if (sortBy === field) {
+      // 同一字段，切换排序方向
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // 新字段，设置默认排序方向
+      setSortBy(field);
+      // 评分默认降序（高分在前），其他默认升序
+      if (field === 'maxRating') {
+        setSortOrder('desc');
+      } else {
+        setSortOrder('asc');
+      }
+    }
+  };
+  
+  // 获取选手最高分（核心或辅助）
+  const getMaxRating = (player: Player) => {
+    const core = getRating(player.ratings, 'core') || 0;
+    const support = getRating(player.ratings, 'support') || 0;
+    return Math.max(core, support);
+  };
+  
+  // 渲染排序箭头
+  const SortArrow = ({ field }: { field: typeof sortBy }) => {
+    if (sortBy !== field) return <span className="sort-arrow">↕</span>;
+    return <span className="sort-arrow active">{sortOrder === 'asc' ? '↑' : '↓'}</span>;
+  };
 
   // 加载数据
   useEffect(() => {
@@ -80,26 +114,64 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
     savePlayer(updatedPlayer);
   };
 
-  // 筛选玩家
-  const filteredPlayers = useMemo(() => {
-    return players.filter(p => {
-      const matchesFilter = !filter || 
-        p.name.toLowerCase().includes(filter.toLowerCase()) ||
-        p.steamId?.includes(filter);
-      
-      // 修复：确保正确比较position（都是number类型）
-      const matchesPosition = positionFilter === 'all' || 
-        p.position.includes(Number(positionFilter) as Position);
-      
-      return matchesFilter && matchesPosition;
-    });
-  }, [players, filter, positionFilter]);
-
   // 获取玩家所在队伍名称
   const getPlayerTeams = (player: Player) => {
     if (!player.teamIds || player.teamIds.length === 0) return '未分配';
     return player.teamIds.map(id => teams[id] || '未知队伍').join(', ');
   };
+
+  // 筛选和排序玩家
+  const filteredPlayers = useMemo(() => {
+    let result = players.filter(p => {
+      const matchesFilter = !filter || 
+        p.name.toLowerCase().includes(filter.toLowerCase()) ||
+        p.steamId?.includes(filter);
+      
+      const matchesPosition = positionFilter === 'all' || 
+        p.position.includes(Number(positionFilter) as Position);
+      
+      return matchesFilter && matchesPosition;
+    });
+    
+    // 排序
+    result = [...result].sort((a, b) => {
+      let compareValue = 0;
+      
+      switch (sortBy) {
+        case 'name':
+          compareValue = a.name.localeCompare(b.name);
+          break;
+        case 'position':
+          // 按最小位置排序（主位置），小的在前（1号位最前）
+          const minPosA = Math.min(...a.position);
+          const minPosB = Math.min(...b.position);
+          compareValue = minPosA - minPosB;
+          break;
+        case 'maxRating':
+          // 按最高分排序（核心或辅助的最高分）
+          const maxA = getMaxRating(a);
+          const maxB = getMaxRating(b);
+          compareValue = maxA - maxB;
+          break;
+        case 'team':
+          // 先按队伍排序
+          const teamA = getPlayerTeams(a);
+          const teamB = getPlayerTeams(b);
+          compareValue = teamA.localeCompare(teamB);
+          // 如果队伍相同，按位置排序（1-5号位）
+          if (compareValue === 0) {
+            const posA = Math.min(...a.position);
+            const posB = Math.min(...b.position);
+            compareValue = posA - posB;
+          }
+          break;
+      }
+      
+      return sortOrder === 'asc' ? compareValue : -compareValue;
+    });
+    
+    return result;
+  }, [players, filter, positionFilter, sortBy, sortOrder]);
 
   // 获取英雄名称
   const getHeroName = (heroId: number) => {
@@ -191,11 +263,19 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
         <table className="players-table v2">
           <thead>
             <tr>
-              <th className="col-player">玩家信息</th>
-              <th className="col-position">位置</th>
-              <th className="col-ratings">评分</th>
+              <th className="col-player sortable" onClick={() => handleSort('name')}>
+                玩家信息 <SortArrow field="name" />
+              </th>
+              <th className="col-position sortable" onClick={() => handleSort('position')}>
+                位置 <SortArrow field="position" />
+              </th>
+              <th className="col-ratings sortable" onClick={() => handleSort('maxRating')}>
+                评分 <SortArrow field="maxRating" />
+              </th>
               <th className="col-heroes">擅长英雄</th>
-              <th className="col-team">所在队伍</th>
+              <th className="col-team sortable" onClick={() => handleSort('team')}>
+                所在队伍 <SortArrow field="team" />
+              </th>
               {!selectionMode && <th className="col-actions">操作</th>}
             </tr>
           </thead>
