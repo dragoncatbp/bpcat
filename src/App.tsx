@@ -513,7 +513,7 @@ function App() {
 
       <footer className="app-footer">
         <p>BPCat v1.0.0 | 为念爱杯内战服务 🎮</p>
-        <p className="update-time">版本更新: 2026-03-21 00:59</p>
+        <p className="update-time">版本更新: 2026-03-21 01:25</p>
       </footer>
     </div>
   );

@@ -34,6 +34,12 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
   const [showForm, setShowForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
   
+  // 导入导出状态
+  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [importCode, setImportCode] = useState('');
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportCode, setExportCode] = useState('');
+  
   // 排序状态 - maxRating 按最高分排序，team 按队伍+位置排序
   const [sortBy, setSortBy] = useState<'name' | 'position' | 'maxRating' | 'team'>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -96,6 +102,56 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
     }
   };
 
+  // 导出数据 - 生成分享码（支持中文）
+  const handleExport = () => {
+    const teams = loadTeamsFromStorage();
+    const data = { 
+      players, 
+      teams,
+      exportedAt: new Date().toISOString(),
+      version: '1.0'
+    };
+    // 使用 encodeURIComponent 处理中文，然后转 Base64
+    const jsonStr = JSON.stringify(data);
+    const encoded = encodeURIComponent(jsonStr);
+    const code = btoa(encoded);
+    setExportCode(code);
+    setShowExportDialog(true);
+  };
+
+  // 导入数据 - 解析分享码（支持中文）
+  const handleImport = (mode: 'merge' | 'replace') => {
+    try {
+      // 先 Base64 解码，再 decodeURIComponent 处理中文
+      const decoded = decodeURIComponent(atob(importCode));
+      const data = JSON.parse(decoded);
+      if (!data.players || !Array.isArray(data.players)) {
+        alert('无效的分享码格式');
+        return;
+      }
+      
+      if (mode === 'replace') {
+        // 替换：清空现有数据，导入新数据
+        data.players.forEach((p: Player) => upsertPlayer(p));
+        if (data.teams) {
+          localStorage.setItem('bpcat_teams', JSON.stringify(data.teams));
+        }
+      } else {
+        // 合并：按ID去重，保留本地数据
+        const existingIds = new Set(players.map(p => p.id));
+        const newPlayers = data.players.filter((p: Player) => !existingIds.has(p.id));
+        newPlayers.forEach((p: Player) => upsertPlayer(p));
+      }
+      
+      setPlayers(loadPlayersPool());
+      setShowImportDialog(false);
+      setImportCode('');
+      alert('导入成功！');
+    } catch (e) {
+      alert('解析失败，请检查分享码');
+    }
+  };
+
   // 更新评分
   const updateRating = (
     player: Player, 
@@ -128,7 +184,7 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
         p.steamId?.includes(filter);
       
       const matchesPosition = positionFilter === 'all' || 
-        p.position.includes(Number(positionFilter) as Position);
+        p.position.map(pos => Number(pos)).includes(Number(positionFilter));
       
       return matchesFilter && matchesPosition;
     });
@@ -216,6 +272,12 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
       <div className="player-mgmt-header">
         <h3>👥 玩家管理</h3>
         <div className="header-actions">
+          <button className="btn-secondary" onClick={() => setShowImportDialog(true)}>
+            📥 导入
+          </button>
+          <button className="btn-secondary" onClick={handleExport}>
+            📤 导出
+          </button>
           <button 
             className="btn-primary"
             onClick={() => {
@@ -531,6 +593,72 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
             setEditingPlayer(null);
           }}
         />
+      )}
+      
+      {/* 导出对话框 */}
+      {showExportDialog && (
+        <div className="dialog-overlay" onClick={() => setShowExportDialog(false)}>
+          <div className="dialog" onClick={e => e.stopPropagation()}>
+            <h4>📤 导出分享码</h4>
+            <p>复制下方代码分享给你的队友：</p>
+            <textarea 
+              className="code-textarea"
+              value={exportCode} 
+              readOnly 
+              rows={4}
+            />
+            <div className="dialog-actions">
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  navigator.clipboard.writeText(exportCode);
+                  alert('已复制到剪贴板！');
+                }}
+              >
+                复制
+              </button>
+              <button className="btn-secondary" onClick={() => setShowExportDialog(false)}>
+                关闭
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* 导入对话框 */}
+      {showImportDialog && (
+        <div className="dialog-overlay" onClick={() => setShowImportDialog(false)}>
+          <div className="dialog" onClick={e => e.stopPropagation()}>
+            <h4>📥 导入分享码</h4>
+            <p>粘贴分享码导入玩家和队伍数据：</p>
+            <textarea 
+              className="code-textarea"
+              value={importCode} 
+              onChange={e => setImportCode(e.target.value)}
+              placeholder="粘贴分享码..."
+              rows={4}
+            />
+            <div className="dialog-actions">
+              <button 
+                className="btn-primary" 
+                onClick={() => handleImport('merge')}
+                disabled={!importCode}
+              >
+                合并导入
+              </button>
+              <button 
+                className="btn-secondary" 
+                onClick={() => handleImport('replace')}
+                disabled={!importCode}
+              >
+                覆盖导入
+              </button>
+              <button className="btn-secondary" onClick={() => setShowImportDialog(false)}>
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

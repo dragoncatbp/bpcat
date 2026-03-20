@@ -23,12 +23,6 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
   const [activeTab, setActiveTab] = useState<'list' | 'edit' | 'add-from-pool'>('list');
   const [editingTeam, setEditingTeam] = useState<Team | null>(null);
 
-  // 导入导出状态
-  const [showImportDialog, setShowImportDialog] = useState(false);
-  const [importCode, setImportCode] = useState('');
-  const [showExportDialog, setShowExportDialog] = useState(false);
-  const [exportCode, setExportCode] = useState('');
-
   // 加载队伍数据
   useEffect(() => {
     setTeams(loadTeamsFromStorage());
@@ -97,44 +91,6 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
     setTeams(loadTeamsFromStorage());
   };
 
-  // 导出数据 - 生成分享码
-  const handleExport = () => {
-    const data = { 
-      teams, 
-      exportedAt: new Date().toISOString(),
-      version: '1.0'
-    };
-    const code = btoa(JSON.stringify(data));
-    setExportCode(code);
-    setShowExportDialog(true);
-  };
-
-  // 导入数据 - 解析分享码
-  const handleImport = (mode: 'merge' | 'replace') => {
-    try {
-      const data = JSON.parse(atob(importCode));
-      if (!data.teams || !Array.isArray(data.teams)) {
-        alert('无效的分享码格式');
-        return;
-      }
-      
-      if (mode === 'replace') {
-        saveTeams(data.teams);
-      } else {
-        // 合并逻辑 - 按队伍名称去重，保留本地数据
-        const existingNames = new Set(teams.map(t => t.name));
-        const newTeams = data.teams.filter((t: Team) => !existingNames.has(t.name));
-        saveTeams([...teams, ...newTeams]);
-      }
-      
-      setShowImportDialog(false);
-      setImportCode('');
-      alert('导入成功！');
-    } catch (e) {
-      alert('解析失败，请检查分享码');
-    }
-  };
-
   // 从玩家池添加成员
   const addPlayerFromPool = (player: Player) => {
     if (!editingTeam) return;
@@ -197,17 +153,9 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
       <div className="team-manager">
         <div className="manager-header">
           <h3>🎮 念爱杯队伍管理</h3>
-          <div className="header-actions">
-            <button className="btn-secondary small" onClick={() => setShowImportDialog(true)}>
-              📥 导入
-            </button>
-            <button className="btn-secondary small" onClick={handleExport}>
-              📤 导出
-            </button>
-            <button className="btn-primary small" onClick={createTeam}>
-              + 新建队伍
-            </button>
-          </div>
+          <button className="btn-primary small" onClick={createTeam}>
+            + 新建队伍
+          </button>
         </div>
         
         {teams.length === 0 ? (
@@ -250,72 +198,6 @@ export function TeamManager({ onSelectTeam, selectedTeamId }: TeamManagerProps) 
                 </div>
               </div>
             ))}
-          </div>
-        )}
-        
-        {/* 导出对话框 */}
-        {showExportDialog && (
-          <div className="dialog-overlay" onClick={() => setShowExportDialog(false)}>
-            <div className="dialog" onClick={e => e.stopPropagation()}>
-              <h4>📤 导出分享码</h4>
-              <p>复制下方代码分享给你的队友：</p>
-              <textarea 
-                className="code-textarea"
-                value={exportCode} 
-                readOnly 
-                rows={4}
-              />
-              <div className="dialog-actions">
-                <button 
-                  className="btn-primary" 
-                  onClick={() => {
-                    navigator.clipboard.writeText(exportCode);
-                    alert('已复制到剪贴板！');
-                  }}
-                >
-                  复制
-                </button>
-                <button className="btn-secondary" onClick={() => setShowExportDialog(false)}>
-                  关闭
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {/* 导入对话框 */}
-        {showImportDialog && (
-          <div className="dialog-overlay" onClick={() => setShowImportDialog(false)}>
-            <div className="dialog" onClick={e => e.stopPropagation()}>
-              <h4>📥 导入分享码</h4>
-              <p>粘贴分享码导入队伍数据：</p>
-              <textarea 
-                className="code-textarea"
-                value={importCode} 
-                onChange={e => setImportCode(e.target.value)}
-                placeholder="粘贴分享码..."
-                rows={4}
-              />
-              <div className="dialog-actions">
-                <button 
-                  className="btn-primary" 
-                  onClick={() => handleImport('merge')}
-                  disabled={!importCode}
-                >
-                  合并导入
-                </button>
-                <button 
-                  className="btn-secondary" 
-                  onClick={() => handleImport('replace')}
-                  disabled={!importCode}
-                >
-                  覆盖导入
-                </button>
-                <button className="btn-secondary" onClick={() => setShowImportDialog(false)}>
-                  取消
-                </button>
-              </div>
-            </div>
           </div>
         )}
       </div>
