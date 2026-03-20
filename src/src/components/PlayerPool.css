@@ -1,0 +1,1069 @@
+/* ===== 玩家管理样式 V2 ===== */
+
+.player-management {
+  padding: 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.player-mgmt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.player-mgmt-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* 筛选栏 */
+.player-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.filter-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-width: 140px;
+  font-size: 0.85rem;
+}
+
+.players-stats {
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+/* 排序栏 */
+.player-sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.sort-label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sort-select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  min-width: 120px;
+}
+
+.sort-order-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sort-order-btn:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* 表格容器 */
+.players-table-container {
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  /* 移除横向滚动，让内容自然展开 */
+  width: 100%;
+}
+
+/* 新表格样式 */
+.players-table.v2 {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.players-table.v2 th {
+  background: var(--bg-dark);
+  padding: 0.6rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.players-table.v2 td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.players-table.v2 tr:last-child td {
+  border-bottom: none;
+}
+
+/* 可排序表头 */
+.players-table.v2 th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.players-table.v2 th.sortable:hover {
+  background: var(--bg-card);
+}
+
+.sort-arrow {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.sort-arrow.active {
+  color: var(--primary);
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* 列宽设置 - 调整以适应单页显示 */
+.col-player {
+  width: 160px;
+}
+
+.col-position {
+  width: 80px;
+}
+
+.col-ratings {
+  width: 140px;
+}
+
+.col-heroes {
+  width: 200px;
+}
+
+.col-team {
+  width: 140px;
+}
+
+.col-actions {
+  width: 70px;
+}
+
+/* 行样式 */
+.player-row:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.core-row {
+  /* 移除暗红色背景 */
+}
+
+.support-row {
+  /* 移除暗绿色背景 */
+}
+
+/* 玩家信息单元格 */
+.player-avatar-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-avatar-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.player-name-id {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.player-steam-id {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* 位置标签 */
+.position-tags {
+  display: flex;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+}
+
+.position-tag {
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.position-tag.pos-1 { background: #e74c3c; color: #fff; }
+.position-tag.pos-2 { background: #9b59b6; color: #fff; }
+.position-tag.pos-3 { background: #3498db; color: #fff; }
+.position-tag.pos-4 { background: #2ecc71; color: #fff; }
+.position-tag.pos-5 { background: #f39c12; color: #fff; }
+
+/* 评分行（简化版） */
+.rating-row-simple {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+}
+
+.rating-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  min-width: 45px;
+  text-align: center;
+}
+
+.rating-label.core {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.rating-label.support {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+
+/* 评分下拉选择器（简化版） */
+.rating-select-simple {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  width: 80px;
+  cursor: pointer;
+}
+
+.rating-select-simple:hover {
+  border-color: var(--accent-color);
+}
+
+.rating-select-simple:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+/* 根据分数显示不同颜色 */
+.rating-select-simple.excellent {
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  color: #000;
+  border-color: #ffd700;
+  font-weight: 600;
+}
+
+.rating-select-simple.good {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #fff;
+  border-color: #2ecc71;
+}
+
+.rating-select-simple.average {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: #fff;
+  border-color: #3498db;
+}
+
+.rating-select-simple.poor {
+  background: rgba(149, 165, 166, 0.3);
+  color: var(--text-secondary);
+}
+
+/* 英雄图标 */
+.hero-icons-small {
+  display: flex;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.hero-icon-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.more-heroes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-dark);
+  border-radius: 3px;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+/* 队伍名称 */
+.team-name {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.btn-icon {
+  padding: 0.3rem;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  opacity: 1;
+  background: var(--bg-dark);
+}
+
+.btn-icon.btn-delete:hover {
+  background: rgba(231, 76, 60, 0.2);
+}
+
+.btn-select {
+  padding: 0.3rem 0.6rem;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* 空状态 */
+.empty-players {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-players p {
+  margin-bottom: 0.75rem;
+}
+
+/* 弹窗样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+}
+
+.modal-content h4 {
+  margin: 0 0 1rem 0;
+}
+
+/* 表单样式 */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+/* 位置选择器 */
+.position-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem;
+}
+
+.position-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.position-checkbox:hover {
+  background: var(--border-color);
+}
+
+.position-checkbox.selected {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+.position-checkbox input {
+  display: none;
+}
+
+/* 已选择的英雄标签 */
+.selected-heroes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background: var(--bg-dark);
+  border-radius: 6px;
+  min-height: 36px;
+}
+
+.selected-hero-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.selected-hero-tag img {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.selected-hero-tag .remove-btn {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: rgba(231, 76, 60, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #e74c3c;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.selected-hero-tag .remove-btn:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* 英雄下拉选择器 */
+.hero-selector-dropdown {
+  position: relative;
+}
+
+.hero-search-input-wrapper {
+  position: relative;
+}
+
+.hero-search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.hero-search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.hero-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.3rem;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.hero-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.hero-dropdown-item:hover,
+.hero-dropdown-item.highlighted {
+  background: var(--bg-dark);
+}
+
+.hero-dropdown-item img {
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.hero-dropdown-item .hero-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.hero-dropdown-empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* 表单操作按钮 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* 响应式 */
+@media (max-width: 1200px) {
+  .players-table.v2 {
+    font-size: 0.8rem;
+  }
+  
+  .rating-select {
+    width: 45px;
+    font-size: 0.75rem;
+  }
+  
+  .cell-label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .col-ratings {
+    min-width: 350px;
+  }
+  
+  .rating-cell {
+    min-width: 40px;
+  }
+}
+
+/* Steam 数据查询 */
+.steam-query .input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.steam-query input {
+  flex: 1;
+}
+
+.steam-query .hint {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Steam 数据面板 */
+.steam-data-panel {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.steam-data-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.steam-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.steam-data-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  flex: 1;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.data-item .label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.data-item .value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.data-item .value.rank {
+  color: #f1c40f;
+}
+
+.data-item .value.highlight {
+  color: #3498db;
+}
+
+/* 近期战绩 */
+.recent-stats {
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.75rem;
+}
+
+.recent-stats h5 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.win-rate {
+  font-weight: 600;
+}
+
+.win-rate.good {
+  color: #2ecc71;
+}
+
+.win-rate.bad {
+  color: #e74c3c;
+}
+
+.top-heroes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.top-heroes span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.top-hero {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.top-hero img {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.top-hero .games {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+
+/* ===== 手机端适配 (< 768px) ===== */
+@media (max-width: 768px) {
+  .player-management {
+    padding: 0.75rem;
+  }
+  
+  /* 筛选栏垂直布局 */
+  .player-filters {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .filter-input,
+  .filter-select {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  /* 表格容器可横向滚动 */
+  .players-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -0.75rem;
+    padding: 0 0.75rem;
+  }
+  
+  .players-table.v2 {
+    min-width: 900px; /* 确保表格最小宽度 */
+    font-size: 0.75rem;
+  }
+  
+  /* 缩小单元格内边距 */
+  .players-table.v2 td,
+  .players-table.v2 th {
+    padding: 0.5rem 0.3rem;
+  }
+  
+  /* 英雄图标缩小 */
+  .hero-icons-small {
+    gap: 0.15rem;
+  }
+  
+  .hero-icon-small {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* 位置标签缩小 */
+  .position-tag {
+    padding: 0.05rem 0.2rem;
+    font-size: 0.6rem;
+  }
+  
+  /* 评分选择器缩小 */
+  .rating-select-simple {
+    width: 50px;
+    padding: 0.2rem;
+    font-size: 0.75rem;
+  }
+  
+  /* 模态框调整 */
+  .player-form-modal {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    padding: 1rem;
+  }
+  
+  /* Steam查询区域 */
+  .steam-query .input-group {
+    flex-direction: column;
+  }
+  
+  .steam-query .input-group button {
+    width: 100%;
+  }
+  
+  /* 已选英雄标签 */
+  .selected-hero-tag {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.75rem;
+  }
+  
+  .selected-hero-tag img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* 英雄搜索下拉框 */
+  .hero-dropdown-list {
+    max-height: 200px;
+  }
+  
+  .hero-dropdown-item {
+    padding: 0.5rem;
+  }
+  
+  .hero-dropdown-item img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ===== 小屏手机 (< 480px) ===== */
+@media (max-width: 480px) {
+  /* 统计信息简化 */
+  .players-stats {
+    font-size: 0.8rem;
+  }
+  
+  /* 表单分组间距 */
+  .form-group {
+    margin-bottom: 0.75rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  
+  /* 位置选择器改为2列 */
+  .position-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .position-checkbox {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Steam数据面板 */
+  .steam-data-panel {
+    padding: 0.75rem;
+  }
+  
+  .steam-data-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .steam-avatar {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .steam-data-info {
+    justify-content: center;
+  }
+  
+  /* 近期战绩 */
+  .recent-stats .stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .top-hero {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ===== 横屏手机优化 ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .player-form-modal {
+    max-height: 90vh;
+  }
+  
+  .hero-dropdown-list {
+    max-height: 150px;
+  }
+}
+
+/* ===== 导入导出对话框 ===== */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-width: 400px;
+  max-width: 90vw;
+}
+
+.dialog h4 {
+  margin: 0 0 1rem 0;
+}
+
+.dialog p {
+  margin: 0 0 0.75rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.code-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: monospace;
+  font-size: 0.85rem;
+  resize: none;
+  word-break: break-all;
+}
+
+.code-textarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-secondary:hover {
+  background: #475569;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
