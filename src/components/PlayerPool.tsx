@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import type { Player, Position } from '@/types/team';
+import type { Player, Position, Team } from '@/types/team';
 import { 
   loadPlayersPool, 
   deletePlayer, 
@@ -33,6 +33,12 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
   const [positionFilter, setPositionFilter] = useState<Position | 'all'>('all');
   const [showForm, setShowForm] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  
+  // 导入导出状态
+  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [importCode, setImportCode] = useState('');
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportCode, setExportCode] = useState('');
   
   // 排序状态 - maxRating 按最高分排序，team 按队伍+位置排序
   const [sortBy, setSortBy] = useState<'name' | 'position' | 'maxRating' | 'team'>('name');
@@ -96,6 +102,160 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
     }
   };
 
+  // 导出数据 - 生成分享码（精简字段 + 压缩 + 支持中文）
+  const handleExport = () => {
+    const teams = loadTeamsFromStorage();
+    
+    // 1. 精简字段：只保留核心数据，移除大字段和可实时获取的数据
+    const essentialPlayers = players.map(p => ({
+      id: p.id,
+      n: p.name,           // name -> n
+      sid: p.steamId,      // steamId -> sid
+      pos: p.position,     // position -> pos
+      tids: p.teamIds || [], // teamIds -> tids
+      r: p.ratings || {},  // ratings -> r
+      sch: p.signatureCoreHeroes || [],     // signatureCoreHeroes -> sch
+      ssh: p.signatureSupportHeroes || [],  // signatureSupportHeroes -> ssh
+      // 移除：avatar, steamData, recentStats, playstyle, notes, steamId64
+    }));
+    
+    // 2. 精简队伍字段
+    const essentialTeams = teams.map(t => ({
+      id: t.id,
+      n: t.name,           // name -> n
+      d: t.description,    // description -> d
+      p: t.players.map(tp => tp.id), // 只存玩家ID，不存完整玩家数据
+      c: t.createdAt,      // createdAt -> c
+      u: t.updatedAt,      // updatedAt -> u
+      cap: t.captainId,    // captainId -> cap
+      main: t.isMainTeam,  // isMainTeam -> main
+    }));
+    
+    const data = { 
+      v: '2.0',            // version -> v
+      t: new Date().toISOString(), // exportedAt -> t
+      p: essentialPlayers, // players -> p
+      tm: essentialTeams,  // teams -> tm
+    };
+    
+    // 3. 压缩：使用 encodeURIComponent + Base64
+    const jsonStr = JSON.stringify(data);
+    const encoded = encodeURIComponent(jsonStr);
+    const code = btoa(encoded);
+    setExportCode(code);
+    setShowExportDialog(true);
+  };
+
+  // 导入数据 - 解析分享码（解压 + 支持中文 + 自动生成队伍）
+  const handleImport = (mode: 'merge' | 'replace') => {
+    try {
+      // 先 Base64 解码，再 decodeURIComponent 处理中文
+      const decoded = decodeURIComponent(atob(importCode));
+      const data = JSON.parse(decoded);
+      
+      // 判断版本：v2.0 是压缩格式，其他是老格式
+      const isCompressed = data.v === '2.0';
+      
+      let importedPlayers: Player[];
+      let importedTeams: any[];
+      
+      if (isCompressed) {
+        // v2.0 压缩格式：解压字段名
+        importedPlayers = data.p.map((ep: any) => ({
+          id: ep.id,
+          name: ep.n,
+          steamId: ep.sid,
+          position: ep.pos,
+          teamIds: ep.tids,
+          ratings: ep.r,
+          signatureCoreHeroes: ep.sch,
+          signatureSupportHeroes: ep.ssh,
+          // 头像和其他字段会根据 steamId 自动获取
+        } as Player));
+        
+        importedTeams = data.tm?.map((et: any) => ({
+          id: et.id,
+          name: et.n,
+          description: et.d,
+          players: et.p, // 这里存的是玩家ID数组
+          createdAt: et.c,
+          updatedAt: et.u,
+          captainId: et.cap,
+          isMainTeam: et.main,
+        })) || [];
+      } else {
+        // 老格式兼容
+        importedPlayers = data.players || [];
+        importedTeams = data.teams || [];
+      }
+      
+      if (!importedPlayers || importedPlayers.length === 0) {
+        alert('分享码中没有玩家数据');
+        return;
+      }
+      
+      // 获取现有队伍
+      const existingTeams = loadTeamsFromStorage();
+      const existingTeamIds = new Set(existingTeams.map(t => t.id));
+      const existingTeamNames = new Set(existingTeams.map(t => t.name));
+      
+      // 导入玩家
+      if (mode === 'replace') {
+        // 替换：清空现有数据，导入新数据
+        importedPlayers.forEach((p: Player) => upsertPlayer(p));
+      } else {
+        // 合并：按ID去重，保留本地数据
+        const existingIds = new Set(players.map(p => p.id));
+        const newPlayers = importedPlayers.filter((p: Player) => !existingIds.has(p.id));
+        newPlayers.forEach((p: Player) => upsertPlayer(p));
+      }
+      
+      // 根据 teamIds 自动生成队伍
+      if (importedTeams.length > 0) {
+        const newTeams = [...existingTeams];
+        const allImportedPlayers = loadPlayersPool(); // 重新加载获取完整玩家列表
+        
+        importedTeams.forEach((importedTeam: any) => {
+          // 检查队伍ID是否已存在
+          if (!existingTeamIds.has(importedTeam.id)) {
+            // 检查队伍名称是否冲突，如果冲突则重命名
+            let teamName = importedTeam.name;
+            let counter = 1;
+            while (existingTeamNames.has(teamName)) {
+              teamName = `${importedTeam.name} (${counter})`;
+              counter++;
+            }
+            
+            // 根据玩家ID列表获取完整玩家数据
+            const teamPlayerIds = importedTeam.players || [];
+            const teamPlayers = allImportedPlayers.filter((p: Player) => 
+              teamPlayerIds.includes(p.id)
+            );
+            
+            newTeams.push({
+              ...importedTeam,
+              name: teamName,
+              players: teamPlayers,
+              updatedAt: new Date().toISOString()
+            } as Team);
+            existingTeamNames.add(teamName);
+            existingTeamIds.add(importedTeam.id);
+          }
+        });
+        
+        localStorage.setItem('bpcat_teams', JSON.stringify(newTeams));
+      }
+      
+      setPlayers(loadPlayersPool());
+      setShowImportDialog(false);
+      setImportCode('');
+      alert(`导入成功！共导入 ${importedPlayers.length} 名玩家，${importedTeams.length} 个队伍`);
+    } catch (e) {
+      console.error('导入错误:', e);
+      alert('解析失败，请检查分享码');
+    }
+  };
+
   // 更新评分
   const updateRating = (
     player: Player, 
@@ -128,7 +288,7 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
         p.steamId?.includes(filter);
       
       const matchesPosition = positionFilter === 'all' || 
-        p.position.includes(Number(positionFilter) as Position);
+        p.position.map(pos => Number(pos)).includes(Number(positionFilter));
       
       return matchesFilter && matchesPosition;
     });
@@ -216,6 +376,12 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
       <div className="player-mgmt-header">
         <h3>👥 玩家管理</h3>
         <div className="header-actions">
+          <button className="btn-secondary" onClick={() => setShowImportDialog(true)}>
+            📥 导入
+          </button>
+          <button className="btn-secondary" onClick={handleExport}>
+            📤 导出
+          </button>
           <button 
             className="btn-primary"
             onClick={() => {
@@ -531,6 +697,72 @@ export function PlayerPool({ onSelectPlayer, selectionMode }: PlayerPoolProps) {
             setEditingPlayer(null);
           }}
         />
+      )}
+      
+      {/* 导出对话框 */}
+      {showExportDialog && (
+        <div className="dialog-overlay" onClick={() => setShowExportDialog(false)}>
+          <div className="dialog" onClick={e => e.stopPropagation()}>
+            <h4>📤 导出分享码</h4>
+            <p>复制下方代码分享给你的队友：</p>
+            <textarea 
+              className="code-textarea"
+              value={exportCode} 
+              readOnly 
+              rows={4}
+            />
+            <div className="dialog-actions">
+              <button 
+                className="btn-primary" 
+                onClick={() => {
+                  navigator.clipboard.writeText(exportCode);
+                  alert('已复制到剪贴板！');
+                }}
+              >
+                复制
+              </button>
+              <button className="btn-secondary" onClick={() => setShowExportDialog(false)}>
+                关闭
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* 导入对话框 */}
+      {showImportDialog && (
+        <div className="dialog-overlay" onClick={() => setShowImportDialog(false)}>
+          <div className="dialog" onClick={e => e.stopPropagation()}>
+            <h4>📥 导入分享码</h4>
+            <p>粘贴分享码导入玩家和队伍数据：</p>
+            <textarea 
+              className="code-textarea"
+              value={importCode} 
+              onChange={e => setImportCode(e.target.value)}
+              placeholder="粘贴分享码..."
+              rows={4}
+            />
+            <div className="dialog-actions">
+              <button 
+                className="btn-primary" 
+                onClick={() => handleImport('merge')}
+                disabled={!importCode}
+              >
+                合并导入
+              </button>
+              <button 
+                className="btn-secondary" 
+                onClick={() => handleImport('replace')}
+                disabled={!importCode}
+              >
+                覆盖导入
+              </button>
+              <button className="btn-secondary" onClick={() => setShowImportDialog(false)}>
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

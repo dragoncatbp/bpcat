@@ -1,5 +1,6 @@
 import type { BPDraft } from '@/types';
 import heroesData from '@/data/heroes.json';
+import { analyzeDraft, getRecommendedHeroes, type BPAnalysis } from '@/services/opendotaApi';
 
 // 评分维度
 export interface BPBlankScores {
@@ -409,3 +410,98 @@ export function getScoreLevel(score: number): string {
   if (score >= 40) return '较差';
   return '需改进';
 }
+
+// ============================================
+// 基于 OpenDota API 的真实数据评估（新增）
+// ============================================
+
+// 异步评估函数（使用真实API数据）
+export async function evaluateDraftWithAPI(
+  draft: BPDraft,
+  perspective: 'radiant' | 'dire' | 'both' = 'radiant'
+): Promise<BPBlankEvaluation & { apiData?: BPAnalysis }> {
+  const teamPicks = perspective === 'dire' ? draft.direPicks : draft.radiantPicks;
+  const opponentPicks = perspective === 'dire' ? draft.radiantPicks : draft.direPicks;
+  const teamBans = perspective === 'dire' ? draft.direBans : draft.radiantBans;
+  
+  try {
+    // 调用 OpenDota API 获取真实数据分析
+    const apiAnalysis = await analyzeDraft(teamPicks, teamBans, opponentPicks);
+    
+    // 获取推荐英雄
+    const recommendations = await getRecommendedHeroes(teamPicks, opponentPicks);
+    
+    // 转换为旧格式兼容
+    const scores: BPBlankScores = {
+      lineupBalance: Math.round(apiAnalysis.winRate * 0.9),
+      teamfight: Math.round(apiAnalysis.winRate * 0.95),
+      push: Math.round(apiAnalysis.winRate * 0.85),
+      gank: Math.round(apiAnalysis.winRate * 0.9),
+      lateGame: Math.round(apiAnalysis.winRate * 0.92),
+      coordination: apiAnalysis.synergies.length > 0 ? 75 : 55,
+    };
+    
+    // 构建建议列表
+    const suggestions: string[] = [...apiAnalysis.recommendations];
+    
+    if (recommendations.length > 0) {
+      const topPick = recommendations[0];
+      const heroName = heroesData.find(h => h.id === topPick.heroId)?.localizedName;
+      suggestions.push(`💡 推荐选择：${heroName}（${topPick.reason}）`);
+    }
+    
+    // Meta标签
+    const tags: string[] = [];
+    if (apiAnalysis.metaTier === 'S') tags.push('🔥 S级 Meta');
+    else if (apiAnalysis.metaTier === 'A') tags.push('⭐ A级强势');
+    
+    if (apiAnalysis.winRate > 55) tags.push('高胜率阵容');
+    else if (apiAnalysis.winRate < 45) tags.push('低胜率预警');
+    
+    // 优势/劣势
+    const strengths: string[] = [];
+    const weaknesses: string[] = [];
+    
+    if (apiAnalysis.winRate >= 55) {
+      strengths.push(`职业比赛胜率高达 ${apiAnalysis.winRate}%`);
+    } else if (apiAnalysis.winRate < 48) {
+      weaknesses.push(`职业比赛胜率仅 ${apiAnalysis.winRate}%，版本弱势`);
+    }
+    
+    if (apiAnalysis.synergies.length > 0) {
+      strengths.push(`拥有 ${apiAnalysis.synergies.length} 个强势搭配`);
+    }
+    
+    if (apiAnalysis.counters.length > 0) {
+      const worstCounter = apiAnalysis.counters[0];
+      const counterName = heroesData.find(h => h.id === worstCounter.counterId)?.localizedName;
+      weaknesses.push(`被对方 ${counterName} 克制`);
+    }
+    
+    return {
+      scores,
+      overallScore: Math.round(apiAnalysis.winRate),
+      tags,
+      strengths,
+      weaknesses,
+      suggestions,
+      keyTimings: apiAnalysis.synergies.length > 0 
+        ? ['利用英雄搭配优势，积极寻找团战机会'] 
+        : ['前期以发育为主，避免正面团战'],
+      counterStrategy: apiAnalysis.counters.length > 0 
+        ? apiAnalysis.counters.map(c => {
+            const counterName = heroesData.find(h => h.id === c.counterId)?.localizedName;
+            return `避免被 ${counterName} 针对，注意站位`;
+          })
+        : undefined,
+      apiData: apiAnalysis, // 额外返回API原始数据
+    };
+  } catch (error) {
+    console.error('API评估失败，使用备用规则:', error);
+    // API失败时回退到规则评估
+    return evaluateDraft(draft, perspective);
+  }
+}
+
+// 导出API类型
+export type { BPAnalysis } from '@/services/opendotaApi';

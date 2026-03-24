@@ -1,6 +1,12 @@
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type { BPDraft, Team } from '@/types';
-import { evaluateDraft, getScoreColor, getScoreLevel } from '@/utils/bpEvaluation';
+import { 
+  evaluateDraftWithAPI, 
+  evaluateDraft,
+  getScoreColor, 
+  getScoreLevel,
+  type BPBlankEvaluation 
+} from '@/utils/bpEvaluation';
 
 interface BPEvaluationProps {
   draft: BPDraft;
@@ -11,10 +17,66 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
   const myTeam = userSide;
   const enemyTeam = userSide === 'radiant' ? 'dire' : 'radiant';
   
-  // 从我方视角评价
-  const myEval = useMemo(() => evaluateDraft(draft, myTeam), [draft, myTeam]);
-  // 从敌方视角评价
-  const enemyEval = useMemo(() => evaluateDraft(draft, enemyTeam), [draft, enemyTeam]);
+  const [myEval, setMyEval] = useState<BPBlankEvaluation | null>(null);
+  const [enemyEval, setEnemyEval] = useState<BPBlankEvaluation | null>(null);
+  const [, setLoading] = useState(true);
+  const [useRealData] = useState(true);
+  
+  useEffect(() => {
+    let cancelled = false;
+    
+    async function fetchEvaluation() {
+      setLoading(true);
+      
+      try {
+        if (useRealData) {
+          // 使用 OpenDota API 真实数据
+          const [myResult, enemyResult] = await Promise.all([
+            evaluateDraftWithAPI(draft, myTeam),
+            evaluateDraftWithAPI(draft, enemyTeam)
+          ]);
+          
+          if (!cancelled) {
+            setMyEval(myResult);
+            setEnemyEval(enemyResult);
+          }
+        } else {
+          // 使用本地规则评估
+          const myResult = evaluateDraft(draft, myTeam);
+          const enemyResult = evaluateDraft(draft, enemyTeam);
+          
+          if (!cancelled) {
+            setMyEval(myResult);
+            setEnemyEval(enemyResult);
+          }
+        }
+      } catch (error) {
+        console.error('评估失败:', error);
+        // 失败时回退到本地规则
+        const myResult = evaluateDraft(draft, myTeam);
+        const enemyResult = evaluateDraft(draft, enemyTeam);
+        
+        if (!cancelled) {
+          setMyEval(myResult);
+          setEnemyEval(enemyResult);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+    
+    fetchEvaluation();
+    
+    return () => {
+      cancelled = true;
+    };
+  }, [draft, myTeam, enemyTeam, useRealData]);
+  
+  // 如果还没有评估结果，使用默认规则评估作为占位
+  const displayMyEval = myEval || evaluateDraft(draft, myTeam);
+  const displayEnemyEval = enemyEval || evaluateDraft(draft, enemyTeam);
 
   const myTeamName = myTeam === 'radiant' ? '天辉' : '夜魇';
   const enemyTeamName = enemyTeam === 'radiant' ? '天辉' : '夜魇';
@@ -31,22 +93,22 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
           <span className="eval-label">我方 ({myTeamName})</span>
           <span 
             className="eval-score"
-            style={{ color: getScoreColor(myEval.overallScore) }}
+            style={{ color: getScoreColor(displayMyEval.overallScore) }}
           >
-            {myEval.overallScore}
+            {displayMyEval.overallScore}
           </span>
-          <span className="eval-level">{getScoreLevel(myEval.overallScore)}</span>
+          <span className="eval-level">{getScoreLevel(displayMyEval.overallScore)}</span>
         </div>
         <div className="eval-vs">VS</div>
         <div className="eval-side enemy-side">
           <span className="eval-label">敌方 ({enemyTeamName})</span>
           <span 
             className="eval-score"
-            style={{ color: getScoreColor(enemyEval.overallScore) }}
+            style={{ color: getScoreColor(displayEnemyEval.overallScore) }}
           >
-            {enemyEval.overallScore}
+            {displayEnemyEval.overallScore}
           </span>
-          <span className="eval-level">{getScoreLevel(enemyEval.overallScore)}</span>
+          <span className="eval-level">{getScoreLevel(displayEnemyEval.overallScore)}</span>
         </div>
       </div>
 
@@ -56,7 +118,7 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         
         {/* 各项分数 */}
         <div className="eval-scores">
-          {Object.entries(myEval.scores).map(([key, score]) => {
+          {Object.entries(displayMyEval.scores).map(([key, score]) => {
             const labels: Record<string, string> = {
               lineupBalance: '阵容平衡',
               teamfight: '团战能力',
@@ -84,11 +146,11 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         </div>
 
         {/* 标签 */}
-        {myEval.tags.length > 0 && (
+        {displayMyEval.tags.length > 0 && (
           <div className="eval-section">
             <span className="section-title">🏷️ 阵容类型</span>
             <div className="eval-tags">
-              {myEval.tags.map((tag, i) => (
+              {displayMyEval.tags.map((tag, i) => (
                 <span key={i} className="eval-tag my-tag">{tag}</span>
               ))}
             </div>
@@ -96,11 +158,11 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         )}
 
         {/* 优势 */}
-        {myEval.strengths.length > 0 && (
+        {displayMyEval.strengths.length > 0 && (
           <div className="eval-section">
             <span className="section-title">💪 我方优势</span>
             <ul className="eval-list">
-              {myEval.strengths.map((s, i) => (
+              {displayMyEval.strengths.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
@@ -108,11 +170,11 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         )}
 
         {/* 劣势 */}
-        {myEval.weaknesses.length > 0 && (
+        {displayMyEval.weaknesses.length > 0 && (
           <div className="eval-section">
             <span className="section-title">⚠️ 需要注意</span>
             <ul className="eval-list">
-              {myEval.weaknesses.map((w, i) => (
+              {displayMyEval.weaknesses.map((w, i) => (
                 <li key={i}>{w}</li>
               ))}
             </ul>
@@ -120,11 +182,11 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         )}
 
         {/* 建议 */}
-        {myEval.suggestions.length > 0 && (
+        {displayMyEval.suggestions.length > 0 && (
           <div className="eval-section">
             <span className="section-title">💡 战术建议</span>
             <ul className="eval-list">
-              {myEval.suggestions.map((s, i) => (
+              {displayMyEval.suggestions.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
             </ul>
@@ -137,18 +199,18 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         <h5 style={{ color: enemyTeamColor }}>🎯 敌方分析与针对</h5>
         
         {/* 敌方阵容标签 */}
-        {enemyEval.tags.length > 0 && (
+        {displayEnemyEval.tags.length > 0 && (
           <div className="eval-section">
-            <span className="section-title">敌方阵容: {enemyEval.tags.join('、')}</span>
+            <span className="section-title">敌方阵容: {displayEnemyEval.tags.join('、')}</span>
           </div>
         )}
 
         {/* 针对策略 */}
-        {enemyEval.counterStrategy && enemyEval.counterStrategy.length > 0 && (
+        {displayEnemyEval.counterStrategy && displayEnemyEval.counterStrategy.length > 0 && (
           <div className="eval-section">
             <span className="section-title">🛡️ 针对策略</span>
             <ul className="eval-list">
-              {enemyEval.counterStrategy.map((c, i) => (
+              {displayEnemyEval.counterStrategy.map((c, i) => (
                 <li key={i}>{c}</li>
               ))}
             </ul>
@@ -156,11 +218,11 @@ export function BPEvaluation({ draft, userSide }: BPEvaluationProps) {
         )}
 
         {/* 关键时间点 */}
-        {myEval.keyTimings.length > 0 && (
+        {displayMyEval.keyTimings.length > 0 && (
           <div className="eval-section">
             <span className="section-title">⏰ 关键时间点</span>
             <ul className="eval-list">
-              {myEval.keyTimings.map((t, i) => (
+              {displayMyEval.keyTimings.map((t, i) => (
                 <li key={i}>{t}</li>
               ))}
             </ul>
